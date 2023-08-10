@@ -22,7 +22,7 @@ const CreatePost = () => {
       text: text,
       user: session?.user?._id,
       city: "Junin, Bs As",
-      status,
+      status
     };
     const fd = new FormData();
     for (let key in postData) {
@@ -36,7 +36,7 @@ const CreatePost = () => {
     try {
       await fetch("/api/post/create", {
         method: "POST",
-        body: fd,
+        body: fd
       })
         .then(async function (response) {
           console.log(response, response.status);

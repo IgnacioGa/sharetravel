@@ -5,11 +5,11 @@ import React from "react";
 
 export const metadata = {
   title: "Travel shares",
-  description: "Share adventure and experiences",
+  description: "Share adventure and experiences"
 };
 
 export default function RootLayout({
-  children,
+  children
 }: {
   children: React.ReactNode;
 }) {

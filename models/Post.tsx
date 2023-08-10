@@ -6,7 +6,7 @@ var slug = require("mongoose-slug-generator");
 var options = {
   separator: "-",
   lang: "en",
-  truncate: 120,
+  truncate: 120
 };
 mongoose.plugin(slug, options);
 var Schema = mongoose.Schema;
@@ -16,28 +16,28 @@ const PostSchema = new Schema(
     ...Metadata,
     title: {
       type: String,
-      required: [true, "Title is required"],
+      required: [true, "Title is required"]
     },
     text: {
       type: String,
-      required: [true, "Text is required"],
+      required: [true, "Text is required"]
     },
     city: {
       type: String,
-      required: [true, "City is required"],
+      required: [true, "City is required"]
     },
     principalImage: {
-      type: String,
+      type: String
     },
     slug: { type: String, slug: "title", unique: true },
     status: {
       type: String,
       enum: STATUS,
       default: STATUS.DRAFT,
-      required: true,
-    },
+      required: true
+    }
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const Post = mongoose.models.Post || mongoose.model("Post", PostSchema);

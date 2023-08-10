@@ -13,7 +13,7 @@ export const POST = async (request: NextRequest) => {
       title: response.get("title"),
       text: response.get("text"),
       city: response.get("city"),
-      status: response.get("status"),
+      status: response.get("status")
     });
 
     await newPost.save();
@@ -23,7 +23,7 @@ export const POST = async (request: NextRequest) => {
     console.log(errors);
     return NextResponse.json(
       { error: "Failed to create a new post" },
-      { status: 400 },
+      { status: 400 }
     );
   }
 };

@@ -9,7 +9,7 @@ function DismissableModal({ children }: any) {
       }
       style={{
         background: "rgba(182, 250, 198, 0.35)",
-        backdropFilter: "blur(3px)",
+        backdropFilter: "blur(3px)"
       }}
     >
       {children}
@@ -18,7 +18,7 @@ function DismissableModal({ children }: any) {
 }
 
 DismissableModal.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.element.isRequired
 };
 
 export default DismissableModal;

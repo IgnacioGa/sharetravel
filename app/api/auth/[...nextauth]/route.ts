@@ -12,18 +12,18 @@ const handler = NextAuth({
       credentials: {
         email: {
           label: "E-mail",
-          type: "text",
+          type: "text"
         },
         password: {
           label: "Password",
-          type: "password",
-        },
+          type: "password"
+        }
       },
       async authorize(credentials) {
         await connectoToDB();
         const email = credentials?.email.toLowerCase();
         const sessionUser = await User.findOne({ email: email }).select(
-          "+password",
+          "+password"
         );
         if (!sessionUser) {
           throw new Error("User does not exist.");
@@ -32,7 +32,7 @@ const handler = NextAuth({
         //validate password
         const passwordIsValid = await bcrypt.compare(
           credentials?.password!,
-          sessionUser.password,
+          sessionUser.password
         );
 
         if (!passwordIsValid) {
@@ -41,17 +41,17 @@ const handler = NextAuth({
 
         return {
           id: sessionUser._id.toString(),
-          ...sessionUser,
+          ...sessionUser
         };
-      },
+      }
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    }),
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET
+    })
   ],
   session: {
-    strategy: "jwt",
+    strategy: "jwt"
   },
   callbacks: {
     jwt: async ({ token, user }) => {
@@ -77,7 +77,7 @@ const handler = NextAuth({
               username: profile?.name?.replace(" ", "").toLowerCase(),
               image: profile?.picture,
               firstName: profile?.given_name,
-              lastName: profile?.family_name,
+              lastName: profile?.family_name
             });
           }
           return true;
@@ -87,8 +87,8 @@ const handler = NextAuth({
         }
       }
       return true;
-    },
-  },
+    }
+  }
 });
 
 export { handler as GET, handler as POST };

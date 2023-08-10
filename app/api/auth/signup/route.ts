@@ -12,13 +12,13 @@ export const POST = async (request: Request) => {
       password: enteredPassword,
       username,
       firstName,
-      lastName,
+      lastName
     });
     return new Response(JSON.stringify(user), { status: 201 });
   } catch (error) {
     return new Response(
       JSON.stringify({ error: "Failed to create a new user" }),
-      { status: 500 },
+      { status: 500 }
     );
   }
 };

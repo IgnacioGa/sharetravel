@@ -16,7 +16,7 @@ async function createUser({
   enteredPassword,
   username,
   firstName,
-  lastName,
+  lastName
 }: LoginProps) {
   console.log({ enteredEmail, enteredPassword, username });
   const response = await fetch("/api/auth/signup", {
@@ -26,12 +26,12 @@ async function createUser({
       enteredPassword,
       username,
       firstName,
-      lastName,
+      lastName
     }),
     headers: new Headers({
       "Content-Type": "application/json",
-      Accept: "application/json",
-    }),
+      Accept: "application/json"
+    })
   });
 
   const data = await response.json();
@@ -59,14 +59,14 @@ function LoginModal({ onCancel }: any) {
 
   async function loginUser({
     email,
-    password,
+    password
   }: {
     email: string | undefined;
     password: string | undefined;
   }) {
     const response = await signIn("credentials", {
       email: email,
-      password: password,
+      password: password
     });
     console.log(response);
   }
@@ -93,7 +93,7 @@ function LoginModal({ onCancel }: any) {
           enteredPassword,
           username,
           firstName,
-          lastName,
+          lastName
         });
         loginUser({ email, password });
       } catch (error) {
