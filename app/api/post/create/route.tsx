@@ -21,9 +21,6 @@ export const POST = async (request: NextRequest) => {
   } catch (error: any) {
     const { errors } = error;
     console.log(errors);
-    return NextResponse.json(
-      { error: "Failed to create a new post" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Failed to create a new post" }, { status: 400 });
   }
 };

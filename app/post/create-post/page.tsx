@@ -66,15 +66,10 @@ const CreatePost = () => {
         <>
           <h1 className="head_text text-center">Create Post</h1>
           <p className="desc text-center">
-            Create your post, can be published directly or put in on draft until
-            is ready. You can publish whatever you want but the idea is to post
-            most personal experiencies in general than cultural or informative
-            posts.
+            Create your post, can be published directly or put in on draft until is ready. You can publish whatever you want but the idea is
+            to post most personal experiencies in general than cultural or informative posts.
           </p>
-          <form
-            className="flex-center flex-col mt-8 w-full"
-            onSubmit={handleSubmit}
-          >
+          <form className="flex-center flex-col mt-8 w-full" onSubmit={handleSubmit}>
             <div className="w-4/5">
               <input
                 type="text"
@@ -95,30 +90,17 @@ const CreatePost = () => {
               <Editor text={text} setText={setText} />
 
               <label className="custom-file-upload">
-                <input
-                  type="file"
-                  className="hidden"
-                  name="multipleFiles"
-                  multiple
-                />
+                <input type="file" className="hidden" name="multipleFiles" multiple />
                 Upload Images
               </label>
             </div>
             <div className="flex flex-row w-full align-middle justify-between mt-7">
               <button className="outline_btn">Delete</button>
               <div className="flex flex-row">
-                <button
-                  type="submit"
-                  className="black_btn mr-5"
-                  onClick={() => setStatus(STATUS.DRAFT)}
-                >
+                <button type="submit" className="black_btn mr-5" onClick={() => setStatus(STATUS.DRAFT)}>
                   Save as draft
                 </button>
-                <button
-                  type="submit"
-                  className="black_btn"
-                  onClick={() => setStatus(STATUS.TOAPPROVE)}
-                >
+                <button type="submit" className="black_btn" onClick={() => setStatus(STATUS.TOAPPROVE)}>
                   Save and publish
                 </button>
               </div>

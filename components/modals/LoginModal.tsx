@@ -11,13 +11,7 @@ interface LoginProps {
 }
 
 // This goes to our signup API endpoint
-async function createUser({
-  enteredEmail,
-  enteredPassword,
-  username,
-  firstName,
-  lastName
-}: LoginProps) {
+async function createUser({ enteredEmail, enteredPassword, username, firstName, lastName }: LoginProps) {
   console.log({ enteredEmail, enteredPassword, username });
   const response = await fetch("/api/auth/signup", {
     method: "POST",
@@ -57,13 +51,7 @@ function LoginModal({ onCancel }: any) {
     setIsLogin((prevState) => !prevState);
   }
 
-  async function loginUser({
-    email,
-    password
-  }: {
-    email: string | undefined;
-    password: string | undefined;
-  }) {
+  async function loginUser({ email, password }: { email: string | undefined; password: string | undefined }) {
     const response = await signIn("credentials", {
       email: email,
       password: password
@@ -106,30 +94,14 @@ function LoginModal({ onCancel }: any) {
     <div
       className={
         "w-5/6 h-5/6 lg:w-[571px] bg-WHITE rounded-[10px] px-4 md:px-8 py-4 fixed top-[10%] shadow-green flex flex-col items-center gap-4  bg-[#F2F2F2] "
-      }
-    >
+      }>
       <div className="flex flex-col items-center">
-        <Image
-          src="/assets/images/logo.svg"
-          width={100}
-          height={100}
-          alt="logo"
-          className="object-coantain mb-4"
-        />
+        <Image src="/assets/images/logo.svg" width={100} height={100} alt="logo" className="object-coantain mb-4" />
       </div>
-      <div
-        className={"flex flex-col items-center gap-4 p-1 md:p-3 rounded-[7px]"}
-      >
-        {isLogin ? (
-          <h1>Welcome back to Share Travel</h1>
-        ) : (
-          <h1>Create an Account</h1>
-        )}
+      <div className={"flex flex-col items-center gap-4 p-1 md:p-3 rounded-[7px]"}>
+        {isLogin ? <h1>Welcome back to Share Travel</h1> : <h1>Create an Account</h1>}
       </div>
-      <form
-        onSubmit={submitHandler}
-        className="flex flex-col align-middle items-start justify-center gap-3"
-      >
+      <form onSubmit={submitHandler} className="flex flex-col align-middle items-start justify-center gap-3">
         <div className="flex flex-col items-center gap-2 justify-center align-middle w-full">
           <div className="input-login">
             <label className="w-4/5 mb-1" htmlFor="email">
@@ -143,34 +115,19 @@ function LoginModal({ onCancel }: any) {
                 <label className="w-4/5 mb-1" htmlFor="username">
                   Username
                 </label>
-                <input
-                  type="input"
-                  id="username"
-                  required
-                  ref={usernameInputRef}
-                />
+                <input type="input" id="username" required ref={usernameInputRef} />
               </div>
               <div className="input-login">
                 <label className="w-4/5 mb-1" htmlFor="fistName">
                   First Name
                 </label>
-                <input
-                  type="input"
-                  id="fistName"
-                  required
-                  ref={firstNameInputRef}
-                />
+                <input type="input" id="fistName" required ref={firstNameInputRef} />
               </div>
               <div className="input-login">
                 <label className="w-4/5 mb-1" htmlFor="lastName">
                   Last Name
                 </label>
-                <input
-                  type="input"
-                  id="lastName"
-                  required
-                  ref={lastNameInputRef}
-                />
+                <input type="input" id="lastName" required ref={lastNameInputRef} />
               </div>
             </>
           )}
@@ -178,23 +135,12 @@ function LoginModal({ onCancel }: any) {
             <label className="w-4/5 mb-1" htmlFor="password">
               Password
             </label>
-            <input
-              type="password"
-              id="password"
-              required
-              ref={passwordInputRef}
-            />
+            <input type="password" id="password" required ref={passwordInputRef} />
           </div>
         </div>
         <div className="my-5 flex flex-row w-full">
-          <button className="black_btn mr-4">
-            {isLogin ? "Login" : "Create Account"}
-          </button>
-          <button
-            className="outline_btn"
-            type="button"
-            onClick={switchAuthModeHandler}
-          >
+          <button className="black_btn mr-4">{isLogin ? "Login" : "Create Account"}</button>
+          <button className="outline_btn" type="button" onClick={switchAuthModeHandler}>
             {isLogin ? "No Account? Create One" : "Already a user? Login"}
           </button>
         </div>
@@ -205,8 +151,7 @@ function LoginModal({ onCancel }: any) {
         type="button"
         onClick={() => {
           signIn("google");
-        }}
-      >
+        }}>
         Or login with google
       </button>
       <div className={"w-full row justify-center items-center mt-4"}>

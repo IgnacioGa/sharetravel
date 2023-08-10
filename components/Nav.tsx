@@ -20,21 +20,12 @@ const Nav = () => {
     <>
       {loginModal && (
         <DismissableModal>
-          <LoginModal
-            onAccept={() => router.refresh()}
-            onCancel={() => setloginModal(false)}
-          />
+          <LoginModal onAccept={() => router.refresh()} onCancel={() => setloginModal(false)} />
         </DismissableModal>
       )}
       <nav className="flex-between w-full mb-16 pt-3">
         <Link href="/" className="flex gap-2 flex-center">
-          <Image
-            src="/assets/images/logo.svg"
-            width={30}
-            height={30}
-            alt="logo"
-            className="object-coantain"
-          />
+          <Image src="/assets/images/logo.svg" width={30} height={30} alt="logo" className="object-coantain" />
           <p className="logo_text">Share Travel</p>
         </Link>
 
@@ -45,17 +36,10 @@ const Nav = () => {
               <Link href="/post/create-post" className="black_btn">
                 Create Post
               </Link>
-              <button
-                type="button"
-                onClick={() => signOut()}
-                className="outline_btn"
-              >
+              <button type="button" onClick={() => signOut()} className="outline_btn">
                 Sign Out
               </button>
-              <Link
-                href={`/profile/${session?.user?.slug}`}
-                className="black_btn"
-              >
+              <Link href={`/profile/${session?.user?.slug}`} className="black_btn">
                 <Image
                   src={session?.user.image || "/assets/icons/profile.svg"}
                   width={37}
@@ -72,8 +56,7 @@ const Nav = () => {
                 onClick={() => {
                   setloginModal(true);
                 }}
-                className="black_btn"
-              >
+                className="black_btn">
                 Sign in
               </button>
             </>
@@ -96,18 +79,10 @@ const Nav = () => {
               />
               {toggleDropdown && (
                 <div className="dropdown">
-                  <Link
-                    href={`/profile/${session?.user?.slug}`}
-                    className="dropdown_link"
-                    onClick={() => setToggleDropdown(false)}
-                  >
+                  <Link href={`/profile/${session?.user?.slug}`} className="dropdown_link" onClick={() => setToggleDropdown(false)}>
                     My profile
                   </Link>
-                  <Link
-                    href="post/create-post"
-                    className="dropdown_link"
-                    onClick={() => setToggleDropdown(false)}
-                  >
+                  <Link href="post/create-post" className="dropdown_link" onClick={() => setToggleDropdown(false)}>
                     Create Post
                   </Link>
                   <button
@@ -116,8 +91,7 @@ const Nav = () => {
                       setToggleDropdown(false);
                       signOut();
                     }}
-                    className="mt-5 w-full black_btn"
-                  >
+                    className="mt-5 w-full black_btn">
                     Sign Out
                   </button>
                 </div>
@@ -130,8 +104,7 @@ const Nav = () => {
                 onClick={() => {
                   setloginModal(true);
                 }}
-                className="black_btn"
-              >
+                className="black_btn">
                 Sign in
               </button>
             </>
