@@ -7,8 +7,9 @@ export const GET = async (request: NextRequest, { params }: { params: { slug: st
     await connectoToDB();
     const post = await Post.findOne({
       slug: params.slug
-    }).populate("creator");
-
+    })
+      .populate("medias")
+      .populate("creator");
     if (post !== null) return NextResponse.json(JSON.stringify(post), { status: 200 });
     return NextResponse.json({ error: "Post not founded." }, { status: 404 });
   } catch (error: any) {

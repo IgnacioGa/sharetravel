@@ -4,7 +4,7 @@ import { PostType } from "@utils/schemasTypes";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import parse from "html-react-parser";
-import NotFound from "@components/notFound";
+import NotFound from "@components/NotFound";
 
 const IndividualPost = ({ params }: { params: { slug: string } }) => {
   const [post, setPost] = useState<PostType | any>(undefined);

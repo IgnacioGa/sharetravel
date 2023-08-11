@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import { uploadCloudImages } from "@utils/cloudinary";
 
 const Editor = dynamic(() => import("@components/Editor"), { ssr: false });
 
@@ -14,50 +15,63 @@ const CreatePost = () => {
   const [status, setStatus] = useState<string>(STATUS.DRAFT);
   const router = useRouter();
 
+  const [title, setTitle] = useState<string>("");
+  const [text, setText] = useState<string>("");
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const fileInput = e.currentTarget.multipleFiles.files;
-    const postData: { [key: string]: any } = {
-      title: title,
-      text: text,
-      user: session?.user?._id,
+    const filesInput = e.currentTarget.multipleFiles.files;
+
+    const postData = {
+      title,
+      text,
+      creator: session?.user?._id,
       city: "Junin, Bs As",
       status
     };
-    const fd = new FormData();
-    for (let key in postData) {
-      fd.append(key, postData[key]);
-    }
-    for (const file of fileInput) {
-      fd.append("file", file);
-    }
-    fd.append("upload_preset", "share-files");
 
     try {
-      await fetch("/api/post/create", {
+      const res = await fetch("/api/post/create", {
         method: "POST",
-        body: fd
-      })
-        .then(async function (response) {
-          console.log(response, response.status);
-          if (response.status == 201) return response.json();
-          const er = await response.json();
-          console.log(er);
-        })
-        .then(function (data) {
-          router.push(`/post/${data.slug}`);
-        });
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(postData)
+      });
+
+      const data = await res.json();
+      const post = JSON.parse(data.object);
+      const imagesData = [];
+
+      if (res.status == 201) {
+        if (filesInput.length > 0) {
+          const images = await uploadCloudImages(filesInput);
+          for (let url in images) {
+            imagesData.push({ post: post._id, url: images[url] });
+          }
+          try {
+            await fetch("/api/images", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify(imagesData)
+            });
+          } catch (error) {
+            console.log(error);
+          }
+        }
+        router.push(`/post/${post.slug}`);
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const [title, setTitle] = useState<string>("");
-  const [text, setText] = useState<string>("");
-
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.currentTarget.value);
   };
+
   return (
     <section className="flex justify-start align-middle flex-col w-full h-screen">
       {!session?.user ? (
