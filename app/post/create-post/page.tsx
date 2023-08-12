@@ -21,13 +21,19 @@ const CreatePost = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const filesInput = e.currentTarget.multipleFiles.files;
+    let principalImage: string[] | undefined;
+
+    if (e.currentTarget.principalFile.files){
+        principalImage = await uploadCloudImages(e.currentTarget.principalFile.files);
+    }
 
     const postData = {
       title,
       text,
       creator: session?.user?._id,
       city: "Junin, Bs As",
-      status
+      status,
+      principalImage: principalImage ? principalImage[0] : undefined
     };
 
     try {

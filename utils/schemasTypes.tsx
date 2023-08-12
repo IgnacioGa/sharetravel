@@ -17,3 +17,9 @@ export interface PostType {
   principalImage: string;
   slug: string;
 }
+
+export interface MediaType {
+  _id: string;
+  post: string;
+  url: string;
+}
