@@ -10,16 +10,16 @@ import Gallery from "@components/Gallery";
 const IndividualPost = ({ params }: { params: { slug: string } }) => {
   const [post, setPost] = useState<PostType | any>(undefined);
   const [notFoundBool, setNotFoundBool] = useState(false);
-  const [medias, setMedias] = useState<MediaType[]>([])
+  const [medias, setMedias] = useState<MediaType[]>([]);
 
   const getPost = useCallback(async () => {
     const response = await fetch(`/api/post/${params.slug}`);
     const data = await response.json();
     const postData = JSON.parse(data);
-    console.log('POST -> ', postData);
+    console.log("POST -> ", postData);
     response.status == 404 ? setNotFoundBool(true) : setPost(postData);
-    if(postData.medias && postData.medias.length > 0){
-      setMedias(postData.medias)
+    if (postData.medias && postData.medias.length > 0) {
+      setMedias(postData.medias);
     }
   }, [params.slug]);
 
@@ -52,17 +52,13 @@ const IndividualPost = ({ params }: { params: { slug: string } }) => {
                 </div>
                 <span>{post?.city}</span>
               </div>
-              <div className="mt-12 justify-start w-full">
-                {parse(`${post.text}`)}
-              </div>
-              
+              <div className="mt-12 justify-start w-full">{parse(`${post.text}`)}</div>
+
               {medias.length > 0 && (
                 <div className="w-3/4 h-[15rem] align-middle justify-center pt-4">
                   <Gallery medias={medias} />
                 </div>
               )}
-                
-              
             </section>
           )}
         </>

@@ -23,8 +23,8 @@ const CreatePost = () => {
     const filesInput = e.currentTarget.multipleFiles.files;
     let principalImage: string[] | undefined;
 
-    if (e.currentTarget.principalFile.files){
-        principalImage = await uploadCloudImages(e.currentTarget.principalFile.files);
+    if (e.currentTarget.principalFile.files) {
+      principalImage = await uploadCloudImages(e.currentTarget.principalFile.files);
     }
 
     const postData = {
