@@ -1,6 +1,7 @@
 import { STATUS } from "@utils/contants";
 import Metadata from "@utils/metadata";
 import mongoose from "mongoose";
+import Media from "./Media";
 
 var slug = require("mongoose-slug-generator");
 var options = {
@@ -37,8 +38,18 @@ const PostSchema = new Schema(
       required: true
     }
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+  }
 );
+
+PostSchema.virtual("medias", {
+  ref: Media,
+  localField: "_id",
+  foreignField: "post"
+});
 
 const Post = mongoose.models.Post || mongoose.model("Post", PostSchema);
 export default Post;

@@ -22,18 +22,15 @@ const handler = NextAuth({
       async authorize(credentials) {
         await connectoToDB();
         const email = credentials?.email.toLowerCase();
-        const sessionUser = await User.findOne({ email: email }).select(
-          "+password"
-        );
+        const sessionUser = await User.findOne({
+          email: email
+        }).select("+password");
         if (!sessionUser) {
           throw new Error("User does not exist.");
         }
 
         //validate password
-        const passwordIsValid = await bcrypt.compare(
-          credentials?.password!,
-          sessionUser.password
-        );
+        const passwordIsValid = await bcrypt.compare(credentials?.password!, sessionUser.password);
 
         if (!passwordIsValid) {
           throw new Error("Invalid credentials");
@@ -59,7 +56,9 @@ const handler = NextAuth({
       return token;
     },
     async session({ session }) {
-      const sessionUser = await User.findOne({ email: session.user?.email });
+      const sessionUser = await User.findOne({
+        email: session.user?.email
+      });
 
       session.user._id = sessionUser?.id;
       session.user.slug = sessionUser?.slug;
@@ -69,7 +68,9 @@ const handler = NextAuth({
       if (profile) {
         try {
           await connectoToDB();
-          const userExists = await User.findOne({ email: profile?.email });
+          const userExists = await User.findOne({
+            email: profile?.email
+          });
 
           if (!userExists) {
             await User.create({

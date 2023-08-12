@@ -1,44 +1,69 @@
+"use client";
+
+import { MediaType, PostType } from "@utils/schemasTypes";
 import Image from "next/image";
+import { useCallback, useEffect, useState } from "react";
+import parse from "html-react-parser";
+import NotFound from "@components/NotFound";
+import Gallery from "@components/Gallery";
 
-const post = {
-  _id: "3",
-  user: {
-    _id: "64bfabbdefce6b61574a708a",
-    email: "ignacio.vilden@gmail.com",
-    username: "nachoodh",
-    image:
-      "https://lh3.googleusercontent.com/a/AAcHTtdV930lsHav43501x89N3oIjfpahTgAuBhfWphL3J4WBQ=s96-c",
-    firstName: "Nachoo ",
-    lastName: "DH",
-    slug: "nachoodh"
-  },
-  slug: "title-slug",
-  text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
-  city: "Pergamino, Buenos Aires",
-  title: "title",
-  principalImage:
-    "https://cdn.britannica.com/32/20032-050-B0CF9E76/Shoppers-Galleria-Vittorio-Emanuele-II-Italy-Milan.jpg"
-};
+const IndividualPost = ({ params }: { params: { slug: string } }) => {
+  const [post, setPost] = useState<PostType | any>(undefined);
+  const [notFoundBool, setNotFoundBool] = useState(false);
+  const [medias, setMedias] = useState<MediaType[]>([]);
 
-const IndividualPost = () => {
+  const getPost = useCallback(async () => {
+    const response = await fetch(`/api/post/${params.slug}`);
+    const data = await response.json();
+    const postData = JSON.parse(data);
+    console.log("POST -> ", postData);
+    response.status == 404 ? setNotFoundBool(true) : setPost(postData);
+    if (postData.medias && postData.medias.length > 0) {
+      setMedias(postData.medias);
+    }
+  }, [params.slug]);
+
+  useEffect(() => {
+    getPost();
+  }, [getPost]);
+
   return (
-    <section className="flex-center flex-col w-full">
-      <h1 className="head_text text-center">{post?.title}</h1>
-      <div className="flex-between flex-row w-full align-middle mt-4">
-        <div className="flex flex-row justify-center">
-          <Image
-            src={post.user.image}
-            width={20}
-            height={20}
-            alt="profile"
-            className="rounded-full mr-2"
-            loading="lazy"
-          />
-          <span>{post.user.username}</span>
-        </div>
-        <span>{post.city}</span>
-      </div>
-    </section>
+    <>
+      {!post && !notFoundBool ? (
+        <div>Loading</div>
+      ) : (
+        <>
+          {notFoundBool ? (
+            <NotFound />
+          ) : (
+            <section className="flex-center flex-col w-full">
+              <div className="head_text text-center mb-5">{post?.title}</div>
+              <div className="flex-between flex-row w-full align-middle mt-4">
+                <div className="flex flex-row justify-center">
+                  <Image
+                    src={post?.creator.image as string}
+                    width={20}
+                    height={20}
+                    alt="profile"
+                    className="rounded-full mr-2"
+                    loading="lazy"
+                  />
+                  <span>{post?.creator.username}</span>
+                </div>
+                <span>{post?.city}</span>
+              </div>
+              <div className="mt-12 justify-start w-full">{parse(`${post.text}`)}</div>
+
+              {medias.length > 0 && (
+                <div className="w-3/4 h-[15rem] align-middle justify-center pt-4">
+                  <Gallery medias={medias} />
+                </div>
+              )}
+            </section>
+          )}
+        </>
+      )}
+    </>
   );
 };
 

@@ -11,8 +11,7 @@ const Unauthorized = ({ text }: any) => {
           //   onClick={() => {
           //     signIn(provider.id);
           //   }}
-          className="black_btn mt-4 w-2/5"
-        >
+          className="black_btn mt-4 w-2/5">
           Sign in or Log In
         </button>
       )}

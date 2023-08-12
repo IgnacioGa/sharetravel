@@ -6,14 +6,9 @@ const Home = () => {
       <h1 className="head_text text-center">
         Share your Experiences
         <br />
-        <span className="orange_gradient text-center">
-          And let the World Knows
-        </span>
+        <span className="orange_gradient text-center">And let the World Knows</span>
       </h1>
-      <p className="desc text-center">
-        Share your experiences with people around the world and help to find the
-        better places for city
-      </p>
+      <p className="desc text-center">Share your experiences with people around the world and help to find the better places for city</p>
 
       <Feed />
     </section>
