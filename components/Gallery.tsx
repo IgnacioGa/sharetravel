@@ -10,7 +10,6 @@ interface PostsProps {
 }
 
 const Gallery: React.FC<PostsProps> = ({ medias }) => {
-  console.log("MEDIAS GALLERY ->", medias);
   return (
     <Carousel>
       {medias.map((image: MediaType) => (

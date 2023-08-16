@@ -4,9 +4,12 @@ import Unauthorized from "@components/Unauthorized";
 import { STATUS, TEXTOPTIONS } from "@utils/contants";
 import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { uploadCloudImages } from "@utils/cloudinary";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { postFormSchema } from "@utils/formSchemas";
 
 const Editor = dynamic(() => import("@components/Editor"), { ssr: false });
 
@@ -14,18 +17,28 @@ const CreatePost = () => {
   const { data: session } = useSession();
   const [status, setStatus] = useState<string>(STATUS.DRAFT);
   const router = useRouter();
-
-  const [title, setTitle] = useState<string>("");
   const [text, setText] = useState<string>("");
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const filesInput = e.currentTarget.multipleFiles.files;
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    getValues,
+    formState: { errors }
+  } = useForm<any>({
+    mode: "onChange",
+    resolver: yupResolver(postFormSchema)
+  });
+
+  const onSubmit = async () => {
+    const filesInput = getValues("multipleFiles");
     let principalImage: string[] | undefined;
 
-    if (e.currentTarget.principalFile.files) {
-      principalImage = await uploadCloudImages(e.currentTarget.principalFile.files);
+    if (getValues("multipleFiles")) {
+      principalImage = await uploadCloudImages(getValues("multipleFiles"));
     }
+
+    const title = getValues("title");
 
     const postData = {
       title,
@@ -71,12 +84,17 @@ const CreatePost = () => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setValue("title", "");
+      setValue("multipleFiles", "");
+      setValue("principalFile", "");
+      setValue("city", "");
     }
   };
 
-  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.currentTarget.value);
-  };
+  useEffect(() => {
+    console.log("errors", errors);
+  }, [errors]);
 
   return (
     <section className="flex justify-start align-middle flex-col w-full h-screen">
@@ -89,30 +107,32 @@ const CreatePost = () => {
             Create your post, can be published directly or put in on draft until is ready. You can publish whatever you want but the idea is
             to post most personal experiencies in general than cultural or informative posts.
           </p>
-          <form className="flex-center flex-col mt-8 w-full" onSubmit={handleSubmit}>
+          <form className="flex-center flex-col mt-8 w-full" onSubmit={handleSubmit(onSubmit)}>
             <div className="w-4/5">
               <input
                 type="text"
                 placeholder="Post Title.."
-                value={title}
-                onChange={handleTitleChange}
                 required
                 className="search_input peer mb-7"
-                name="title"
                 id="id_title"
+                {...register("title")}
               />
+              {errors.title && <small id="emailHelp">Title is a required field</small>}
 
               <label className="custom-file-upload mb-6">
-                <input type="file" className="hidden" name="principalFile" />
+                <input type="file" className="hidden" {...register("principalFile")} />
                 Principal Image
               </label>
-
+              {errors.principalFile && <small id="emailHelp">Email is a required field</small>}
               <Editor text={text} setText={setText} />
 
               <label className="custom-file-upload">
-                <input type="file" className="hidden" name="multipleFiles" multiple />
+                <input type="file" className="hidden" {...register("multipleFiles")} multiple />
                 Upload Images
               </label>
+              {errors.multipleFiles && <small id="emailHelp">photo error</small>}
+              <input type="text" placeholder="City.." required className="search_input peer mb-7" id="id_city" {...register("city")} />
+              {errors.city && <small id="emailHelp">City is a required field</small>}
             </div>
             <div className="flex flex-row w-full align-middle justify-between mt-7">
               <button className="outline_btn">Delete</button>
