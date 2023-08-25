@@ -43,14 +43,14 @@ export interface FormProps {
 }
 
 export interface FormProviderProps extends FormProps {
-  setValue: any
+  setValue: any;
 }
 
 export interface ImageProps {
-  createdAt: string,
-  post: string
-  updatedAt: string
-  url:string 
-  __v: number
-  _id: string
+  createdAt: string;
+  post: string;
+  updatedAt: string;
+  url: string;
+  __v: number;
+  _id: string;
 }

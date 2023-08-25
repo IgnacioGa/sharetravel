@@ -11,24 +11,19 @@ const ImagePreview = ({ image }: Props) => {
 
   useEffect(() => {
     // create the preview
-    if(typeof image === 'string') {
+    if (typeof image === "string") {
       setImageURL(image);
-    }
-    else if(image instanceof File) {
+    } else if (image instanceof File) {
       const objectUrl = URL.createObjectURL(image);
       setImageURL(objectUrl);
       return () => URL.revokeObjectURL(objectUrl);
-    }
-    else if(Array.isArray(image)) {
+    } else if (Array.isArray(image)) {
       const objectUrl = URL.createObjectURL(image[0]);
       setImageURL(objectUrl);
       return () => URL.revokeObjectURL(objectUrl);
-    }
-    else {
+    } else {
       setImageURL(image.url);
     }
-    
-    
   }, [image]);
 
   if (imageURL === null) return null;

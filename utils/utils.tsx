@@ -36,9 +36,8 @@ export function checkIfFilesAreCorrectType(files?: any[] | any | null | undefine
 
 export function instanceOfImage(object: any): object is ImageProps {
   try {
-    return 'url' in object && 'post' in object;
-  }
-  catch {
-    return false
+    return "url" in object && "post" in object;
+  } catch {
+    return false;
   }
 }

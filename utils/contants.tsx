@@ -22,5 +22,5 @@ export enum STATUS {
 export enum INDIVIDUAL_PAGE_STATUS {
   LOADING = "loading",
   NOT_FOUND = "notFound",
-  READY = "ready",
+  READY = "ready"
 }

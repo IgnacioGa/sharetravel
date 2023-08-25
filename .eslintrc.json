@@ -3,12 +3,11 @@
   // Using the unused imports package to autofix unused imports
   "plugins": ["unused-imports"],
   "globals": {
-    "JSX": "readonly",
+    "JSX": "readonly"
   },
   "rules": {
     "no-unused-vars": "off",
     // "@typescript-eslint/no-unused-vars": ["error", { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }],
-    "@typescript-eslint/no-unused-vars": ["off"],
-  },
-
+    "@typescript-eslint/no-unused-vars": ["off"]
+  }
 }

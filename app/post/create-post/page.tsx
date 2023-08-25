@@ -9,7 +9,19 @@ import { useFormContext } from "@provider/formProvider";
 const CreatePost = () => {
   const { data: session } = useSession();
 
-  const { onSubmit, handleSubmit, register, errors, setStatus, text, setText, principalImage, setPrincipalImage, multipleFiles, onChangeMultipleFields} = useFormContext();
+  const {
+    onSubmit,
+    handleSubmit,
+    register,
+    errors,
+    setStatus,
+    text,
+    setText,
+    principalImage,
+    setPrincipalImage,
+    multipleFiles,
+    onChangeMultipleFields
+  } = useFormContext();
 
   return (
     <section className="flex justify-start align-middle flex-col w-full h-screen">

@@ -24,7 +24,6 @@ function Editor({ text, setText }: Props) {
           const data = editor.getData();
           setText(data);
         }}
-        
       />
     );
   } else {

@@ -6,9 +6,7 @@ import { FormContextProvider } from "@provider/formProvider";
 export default function Provider({ children }: { children: React.ReactNode }) {
   return (
     <SessionProvider>
-      <FormContextProvider>
-        {children}
-      </FormContextProvider>
+      <FormContextProvider>{children}</FormContextProvider>
     </SessionProvider>
-  )
+  );
 }
