@@ -32,7 +32,7 @@ const UpdatePost = ({ params }: { params: { slug: string } }) => {
 
   useEffect(() => {
     getPost();
-  }, []);
+  });
 
   const { data: session } = useSession();
 
