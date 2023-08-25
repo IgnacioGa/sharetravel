@@ -1,3 +1,7 @@
+/* eslint-disable no-unused-vars */
+import { Dispatch, SetStateAction } from "react";
+import { FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from "react-hook-form";
+
 export interface UserType {
   _id: string;
   email: string;
@@ -22,4 +26,31 @@ export interface MediaType {
   _id: string;
   post: string;
   url: string;
+}
+
+export interface FormProps {
+  onSubmit: SubmitHandler<any>;
+  handleSubmit: UseFormHandleSubmit<any, undefined>;
+  register: UseFormRegister<any>;
+  errors: FieldErrors<any>;
+  setStatus: Dispatch<SetStateAction<string>>;
+  text: string;
+  setText: Dispatch<SetStateAction<string>>;
+  principalImage: File[] | string;
+  setPrincipalImage: Dispatch<SetStateAction<File[] | string>>;
+  multipleFiles: File[] | ImageProps[] | any[];
+  onChangeMultipleFields: (files: FileList | null) => void;
+}
+
+export interface FormProviderProps extends FormProps {
+  setValue: any
+}
+
+export interface ImageProps {
+  createdAt: string,
+  post: string
+  updatedAt: string
+  url:string 
+  __v: number
+  _id: string
 }

@@ -13,20 +13,22 @@ export const postFormSchema: Yup.ObjectSchema<IForm> = Yup.object({
   multipleFiles: Yup.mixed<FileList>()
     .required("You need to provide a file")
     .test("fileSize", "The file is too large", (files) => {
-      let toBig = false;
+      let toBig = true;
       for (let value in files) {
-        if (files[value] instanceof File && files[value].size < 2000000) toBig = true;
+        if (files[value] instanceof File && files[value].size > 2000000) toBig = false;
       }
       return toBig;
     })
     .test("type", "Only the following formats are accepted: .jpeg, .jpg, .png", (files) => {
-      let goodType = false;
+      let goodType = true;
       for (let value in files) {
         if (
           files[value] instanceof File &&
-          (files[value].type === "image/jpeg" || files[value].type === "image/jpg" || files[value].type === "image/png")
+          files[value].type !== "image/jpeg" &&
+          files[value].type !== "image/jpg" &&
+          files[value].type !== "image/png"
         )
-          goodType = true;
+          goodType = false;
       }
       return goodType;
     }),

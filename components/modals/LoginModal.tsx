@@ -12,7 +12,6 @@ interface LoginProps {
 
 // This goes to our signup API endpoint
 async function createUser({ enteredEmail, enteredPassword, username, firstName, lastName }: LoginProps) {
-  console.log({ enteredEmail, enteredPassword, username });
   const response = await fetch("/api/auth/signup", {
     method: "POST",
     body: JSON.stringify({
@@ -56,7 +55,6 @@ function LoginModal({ onCancel }: any) {
       email: email,
       password: password
     });
-    console.log(response);
   }
 
   async function submitHandler(event: FormEvent<HTMLFormElement>) {

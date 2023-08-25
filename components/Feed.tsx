@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, ChangeEvent, useCallback } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import { PostType } from "@utils/schemasTypes";
 import { PostContainer } from "./PostContainer";
 
@@ -68,16 +68,16 @@ const Feed = () => {
     setSearchText(e.currentTarget.value);
   };
 
-  const fetchPosts = useCallback(async () => {
+  const fetchPosts = async () => {
     const response = await fetch("/api/post");
     const data = await response.json();
 
     setPosts(data);
-  }, []);
+  };
 
   useEffect(() => {
     fetchPosts();
-  }, [fetchPosts]);
+  }, []);
 
   return (
     <section className="feed">

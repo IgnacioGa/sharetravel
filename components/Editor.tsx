@@ -19,15 +19,12 @@ function Editor({ text, setText }: Props) {
       <CKEditor
         editor={ClassicEditor}
         data={text}
-        onReady={(editor) => {
-          // You can store the "editor" and use when it is needed.
-          console.log("Editor is ready to use!", editor);
-        }}
         onChange={(event, editor) => {
           // do something when editor's content changed
           const data = editor.getData();
           setText(data);
         }}
+        
       />
     );
   } else {

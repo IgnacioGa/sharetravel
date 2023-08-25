@@ -18,3 +18,9 @@ export enum STATUS {
   ARCHIVED = "archived",
   DELETED = "deleted"
 }
+
+export enum INDIVIDUAL_PAGE_STATUS {
+  LOADING = "loading",
+  NOT_FOUND = "notFound",
+  READY = "ready",
+}
