@@ -26,13 +26,14 @@ const UpdatePost = ({ params }: { params: { slug: string } }) => {
     setValue("title", postData?.title);
     setText(postData?.text);
     setValue("city", postData?.city);
+    console.log('postdata ->', postData)
     setPageStatus(INDIVIDUAL_PAGE_STATUS.READY);
     if (postData.principalImage) setPrincipalImage(postData.principalImage);
   };
 
   useEffect(() => {
     getPost();
-  });
+  }, []);
 
   const { data: session } = useSession();
 

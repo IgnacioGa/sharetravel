@@ -68,7 +68,7 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
       if (multipleFiles[file] instanceof File) filesInput.push(multipleFiles[file] as File);
     }
 
-    if (principalImage.length > 0 && principalImage instanceof File) {
+    if (principalImage.length > 0 && principalImage[0] instanceof File) {
       urlPrincipalImage = await uploadCloudImages(principalImage as File[]);
     }
 
