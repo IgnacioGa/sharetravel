@@ -20,7 +20,7 @@ const UpdatePost = ({ params }: { params: { slug: string } }) => {
       onChangeMultipleFields(postData.medias);
     }
     setInitialData(postData);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const setInitialData = (postData: PostType) => {
