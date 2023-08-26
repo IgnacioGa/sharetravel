@@ -62,7 +62,7 @@ const Form = ({
           Upload Images
         </label>
         {errors.multipleFiles && <small id="emailHelp">photo error</small>}
-        {multipleFiles.length > 0 ? multipleFiles.map((file) => <ImagePreview key={file.name} image={file} />) : null}
+        {multipleFiles.length > 0 ? multipleFiles.map((file, i) => <ImagePreview key={i} image={file} />) : null}
         <input type="text" placeholder="City.." required className="search_input peer mb-7" id="id_city" {...register("city")} />
         {errors.city && <small id="emailHelp">City is a required field</small>}
       </div>

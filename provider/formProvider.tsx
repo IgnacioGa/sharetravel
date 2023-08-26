@@ -25,7 +25,8 @@ const INITIAL_VALUES: FormProviderProps = {
   principalImage: [],
   setPrincipalImage: () => {},
   multipleFiles: [],
-  onChangeMultipleFields: (files: FileList | null) => {}
+  onChangeMultipleFields: (files: FileList | ImageProps[] | null) => {},
+  setSubmitURL: () => ''
 };
 
 const FormContext = createContext(INITIAL_VALUES);
@@ -36,6 +37,7 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
   const [principalImage, setPrincipalImage] = useState<File[] | string>([]);
   const [text, setText] = useState<string>("");
   const [status, setStatus] = useState<string>(STATUS.DRAFT);
+  const [submitURL, setSubmitURL] = useState<string>('/api/post/create')
 
   const router = useRouter();
 
@@ -85,7 +87,7 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
     };
 
     try {
-      const res = await fetch("/api/post/create", {
+      const res = await fetch(submitURL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -140,7 +142,8 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
       principalImage,
       setPrincipalImage,
       multipleFiles,
-      onChangeMultipleFields
+      onChangeMultipleFields,
+      setSubmitURL
     };
   }, [errors, text, principalImage, multipleFiles]);
 

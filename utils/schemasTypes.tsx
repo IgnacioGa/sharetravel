@@ -14,11 +14,12 @@ export interface UserType {
 
 export interface PostType {
   _id: string;
-  user: UserType;
+  creator: UserType;
   text: string;
   city: string;
   title: string;
   principalImage: string;
+  medias: ImageProps[]
   slug: string;
 }
 
@@ -39,11 +40,13 @@ export interface FormProps {
   principalImage: File[] | string;
   setPrincipalImage: Dispatch<SetStateAction<File[] | string>>;
   multipleFiles: File[] | ImageProps[] | any[];
-  onChangeMultipleFields: (files: FileList | null) => void;
+  onChangeMultipleFields: (files: FileList | ImageProps[] | null) => void;
+  
 }
 
 export interface FormProviderProps extends FormProps {
   setValue: any;
+  setSubmitURL: Dispatch<SetStateAction<string>>;
 }
 
 export interface ImageProps {

@@ -17,3 +17,17 @@ export const GET = async (request: NextRequest, { params }: { params: { slug: st
     return NextResponse.json({ error: "Server Error." }, { status: 500 });
   }
 };
+
+export const POST = async (request: NextRequest, { params }: { params: { slug: string }}) => {
+  const data = await request.json();
+  try {
+    await connectoToDB();
+
+    let updatedPost = await Post.findOneAndUpdate({ slug: params.slug }, data);
+
+    return NextResponse.json({ object: JSON.stringify(updatedPost) }, { status: 201 });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({ error: "Failed to update post" }, { status: 400 });
+  }
+};

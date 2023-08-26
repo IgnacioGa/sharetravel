@@ -7,36 +7,55 @@ import { PostType } from "@utils/schemasTypes";
 import { useSession } from "next-auth/react";
 import React, { useCallback, useEffect, useState } from "react";
 import { useFormContext } from "@provider/formProvider";
-import { INDIVIDUAL_PAGE_STATUS } from "@utils/contants";
+import { INDIVIDUAL_PAGE_STATUS, TEXTOPTIONS } from "@utils/contants";
+import Unauthorized from "@components/Unauthorized";
 
 const UpdatePost = ({ params }: { params: { slug: string } }) => {
   const [pageStatus, setPageStatus] = useState<INDIVIDUAL_PAGE_STATUS>(INDIVIDUAL_PAGE_STATUS.LOADING);
+  const [postData, setPostData] = useState<null | PostType>(null)
 
   const getPost = useCallback(async () => {
     const response = await getApiPost(params.slug);
     if (response.status == 404) return setPageStatus(INDIVIDUAL_PAGE_STATUS.NOT_FOUND);
     const postData = response.data;
-    if (postData.medias && postData.medias.length > 0) {
-      onChangeMultipleFields(postData.medias);
-    }
+    setPostData(postData)
+    setSubmitURL(`/api/post/${postData.slug}`)
     setInitialData(postData);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const setInitialData = (postData: PostType) => {
+    if (postData.medias && postData.medias.length > 0) {
+      onChangeMultipleFields(postData.medias);
+    }
     setValue("title", postData?.title);
     setText(postData?.text);
     setValue("city", postData?.city);
     console.log("postdata ->", postData);
-    setPageStatus(INDIVIDUAL_PAGE_STATUS.READY);
     if (postData.principalImage) setPrincipalImage(postData.principalImage);
   };
 
   useEffect(() => {
     getPost();
   }, [getPost]);
-
+  
   const { data: session } = useSession();
+
+  useEffect(() => {
+    if(session?.user) {
+      if(pageStatus === INDIVIDUAL_PAGE_STATUS.NOT_FOUND) return;
+
+      if(postData){
+        if(session.user._id === postData.creator._id) {
+          setPageStatus(INDIVIDUAL_PAGE_STATUS.READY)
+        }
+        else {
+          setPageStatus(INDIVIDUAL_PAGE_STATUS.UNAUTHORIZED)
+        }
+      }
+    }
+    if(session === null) setPageStatus(INDIVIDUAL_PAGE_STATUS.UNAUTHORIZED)
+  }, [session, postData, pageStatus])
 
   const {
     onSubmit,
@@ -50,11 +69,13 @@ const UpdatePost = ({ params }: { params: { slug: string } }) => {
     principalImage,
     setPrincipalImage,
     multipleFiles,
-    onChangeMultipleFields
+    onChangeMultipleFields,
+    setSubmitURL
   } = useFormContext();
 
   if (pageStatus === INDIVIDUAL_PAGE_STATUS.LOADING) return <div>Loading</div>;
   if (pageStatus === INDIVIDUAL_PAGE_STATUS.NOT_FOUND) return <NotFound />;
+  if (pageStatus === INDIVIDUAL_PAGE_STATUS.UNAUTHORIZED) return <Unauthorized text={TEXTOPTIONS.unlogged} />;
 
   return (
     <Form
