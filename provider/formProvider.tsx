@@ -26,7 +26,7 @@ const INITIAL_VALUES: FormProviderProps = {
   setPrincipalImage: () => {},
   multipleFiles: [],
   onChangeMultipleFields: (files: FileList | ImageProps[] | null) => {},
-  setSubmitURL: () => ''
+  setSubmitURL: () => ""
 };
 
 const FormContext = createContext(INITIAL_VALUES);
@@ -37,7 +37,7 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
   const [principalImage, setPrincipalImage] = useState<File[] | string>([]);
   const [text, setText] = useState<string>("");
   const [status, setStatus] = useState<string>(STATUS.DRAFT);
-  const [submitURL, setSubmitURL] = useState<string>('/api/post/create')
+  const [submitURL, setSubmitURL] = useState<string>("/api/post/create");
 
   const router = useRouter();
 

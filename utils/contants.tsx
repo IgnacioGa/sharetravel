@@ -22,6 +22,6 @@ export enum STATUS {
 export enum INDIVIDUAL_PAGE_STATUS {
   LOADING = "loading",
   NOT_FOUND = "notFound",
-  UNAUTHORIZED =  "unauthorized",
+  UNAUTHORIZED = "unauthorized",
   READY = "ready"
 }

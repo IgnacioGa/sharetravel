@@ -27,10 +27,9 @@ const CreatePost = () => {
   } = useFormContext();
 
   useEffect(() => {
-    if(session?.user) setPageStatus(INDIVIDUAL_PAGE_STATUS.READY)
-    if(session === null) setPageStatus(INDIVIDUAL_PAGE_STATUS.UNAUTHORIZED)
-  }, [session])
-  
+    if (session?.user) setPageStatus(INDIVIDUAL_PAGE_STATUS.READY);
+    if (session === null) setPageStatus(INDIVIDUAL_PAGE_STATUS.UNAUTHORIZED);
+  }, [session]);
 
   if (pageStatus === INDIVIDUAL_PAGE_STATUS.LOADING) return <div>Loading</div>;
   if (pageStatus === INDIVIDUAL_PAGE_STATUS.UNAUTHORIZED) return <Unauthorized text={TEXTOPTIONS.unlogged} />;
@@ -39,8 +38,8 @@ const CreatePost = () => {
     <section className="flex justify-start align-middle flex-col w-full h-screen">
       <h1 className="head_text text-center">Create Post</h1>
       <p className="desc text-center">
-        Create your post, can be published directly or put in on draft until is ready. You can publish whatever you want but the idea is
-        to post most personal experiencies in general than cultural or informative posts.
+        Create your post, can be published directly or put in on draft until is ready. You can publish whatever you want but the idea is to
+        post most personal experiencies in general than cultural or informative posts.
       </p>
       <Form
         onSubmit={onSubmit}

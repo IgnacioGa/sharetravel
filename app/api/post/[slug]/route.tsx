@@ -18,7 +18,7 @@ export const GET = async (request: NextRequest, { params }: { params: { slug: st
   }
 };
 
-export const POST = async (request: NextRequest, { params }: { params: { slug: string }}) => {
+export const POST = async (request: NextRequest, { params }: { params: { slug: string } }) => {
   const data = await request.json();
   try {
     await connectoToDB();

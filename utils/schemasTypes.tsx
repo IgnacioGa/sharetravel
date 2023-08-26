@@ -19,7 +19,7 @@ export interface PostType {
   city: string;
   title: string;
   principalImage: string;
-  medias: ImageProps[]
+  medias: ImageProps[];
   slug: string;
 }
 
@@ -41,7 +41,6 @@ export interface FormProps {
   setPrincipalImage: Dispatch<SetStateAction<File[] | string>>;
   multipleFiles: File[] | ImageProps[] | any[];
   onChangeMultipleFields: (files: FileList | ImageProps[] | null) => void;
-  
 }
 
 export interface FormProviderProps extends FormProps {

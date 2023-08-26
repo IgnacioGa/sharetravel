@@ -12,14 +12,14 @@ import Unauthorized from "@components/Unauthorized";
 
 const UpdatePost = ({ params }: { params: { slug: string } }) => {
   const [pageStatus, setPageStatus] = useState<INDIVIDUAL_PAGE_STATUS>(INDIVIDUAL_PAGE_STATUS.LOADING);
-  const [postData, setPostData] = useState<null | PostType>(null)
+  const [postData, setPostData] = useState<null | PostType>(null);
 
   const getPost = useCallback(async () => {
     const response = await getApiPost(params.slug);
     if (response.status == 404) return setPageStatus(INDIVIDUAL_PAGE_STATUS.NOT_FOUND);
     const postData = response.data;
-    setPostData(postData)
-    setSubmitURL(`/api/post/${postData.slug}`)
+    setPostData(postData);
+    setSubmitURL(`/api/post/${postData.slug}`);
     setInitialData(postData);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -38,24 +38,23 @@ const UpdatePost = ({ params }: { params: { slug: string } }) => {
   useEffect(() => {
     getPost();
   }, [getPost]);
-  
+
   const { data: session } = useSession();
 
   useEffect(() => {
-    if(session?.user) {
-      if(pageStatus === INDIVIDUAL_PAGE_STATUS.NOT_FOUND) return;
+    if (session?.user) {
+      if (pageStatus === INDIVIDUAL_PAGE_STATUS.NOT_FOUND) return;
 
-      if(postData){
-        if(session.user._id === postData.creator._id) {
-          setPageStatus(INDIVIDUAL_PAGE_STATUS.READY)
-        }
-        else {
-          setPageStatus(INDIVIDUAL_PAGE_STATUS.UNAUTHORIZED)
+      if (postData) {
+        if (session.user._id === postData.creator._id) {
+          setPageStatus(INDIVIDUAL_PAGE_STATUS.READY);
+        } else {
+          setPageStatus(INDIVIDUAL_PAGE_STATUS.UNAUTHORIZED);
         }
       }
     }
-    if(session === null) setPageStatus(INDIVIDUAL_PAGE_STATUS.UNAUTHORIZED)
-  }, [session, postData, pageStatus])
+    if (session === null) setPageStatus(INDIVIDUAL_PAGE_STATUS.UNAUTHORIZED);
+  }, [session, postData, pageStatus]);
 
   const {
     onSubmit,
