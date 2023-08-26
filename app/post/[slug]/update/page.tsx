@@ -5,14 +5,14 @@ import NotFound from "@components/NotFound";
 import { getApiPost } from "@requests/post";
 import { PostType } from "@utils/schemasTypes";
 import { useSession } from "next-auth/react";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useFormContext } from "@provider/formProvider";
 import { INDIVIDUAL_PAGE_STATUS } from "@utils/contants";
 
 const UpdatePost = ({ params }: { params: { slug: string } }) => {
   const [pageStatus, setPageStatus] = useState<INDIVIDUAL_PAGE_STATUS>(INDIVIDUAL_PAGE_STATUS.LOADING);
 
-  const getPost = async () => {
+  const getPost = useCallback(async () => {
     const response = await getApiPost(params.slug);
     if (response.status == 404) return setPageStatus(INDIVIDUAL_PAGE_STATUS.NOT_FOUND);
     const postData = response.data;
@@ -20,20 +20,21 @@ const UpdatePost = ({ params }: { params: { slug: string } }) => {
       onChangeMultipleFields(postData.medias);
     }
     setInitialData(postData);
-  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const setInitialData = (postData: PostType) => {
     setValue("title", postData?.title);
     setText(postData?.text);
     setValue("city", postData?.city);
-    console.log('postdata ->', postData)
+    console.log("postdata ->", postData);
     setPageStatus(INDIVIDUAL_PAGE_STATUS.READY);
     if (postData.principalImage) setPrincipalImage(postData.principalImage);
   };
 
   useEffect(() => {
     getPost();
-  }, []);
+  }, [getPost]);
 
   const { data: session } = useSession();
 
