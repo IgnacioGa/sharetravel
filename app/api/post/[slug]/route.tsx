@@ -23,7 +23,7 @@ export const POST = async (request: NextRequest, { params }: { params: { slug: s
   try {
     await connectoToDB();
 
-    let updatedPost = await Post.findOneAndUpdate({ slug: params.slug }, data);
+    let updatedPost = await Post.findOneAndUpdate({ slug: params.slug }, data, {new: true});
 
     return NextResponse.json({ object: JSON.stringify(updatedPost) }, { status: 201 });
   } catch (error) {

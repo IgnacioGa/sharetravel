@@ -8,11 +8,16 @@ import NotFound from "@components/NotFound";
 import Gallery from "@components/Gallery";
 import { getApiPost } from "@requests/post";
 import { INDIVIDUAL_PAGE_STATUS } from "@utils/contants";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const IndividualPost = ({ params }: { params: { slug: string } }) => {
   const [post, setPost] = useState<PostType | any>(undefined);
   const [medias, setMedias] = useState<MediaType[]>([]);
   const [pageStatus, setPageStatus] = useState<INDIVIDUAL_PAGE_STATUS>(INDIVIDUAL_PAGE_STATUS.LOADING);
+
+  const router = useRouter();
+  const { data: session } = useSession();
 
   const getPost = useCallback(async () => {
     const response = await getApiPost(params.slug);
@@ -35,6 +40,13 @@ const IndividualPost = ({ params }: { params: { slug: string } }) => {
 
   return (
     <section className="flex-center flex-col w-full">
+      {session?.user._id === post.creator._id ? (
+        <div className="w-full mb-4">
+          <button type="submit" className="black_btn" onClick={() => router.push(`/post/${post.slug}/update`)}>
+            Edit Post
+          </button>
+        </div>
+      ) : null}
       <div className="head_text text-center mb-5">{post?.title}</div>
       <div className="flex-between flex-row w-full align-middle mt-4">
         <div className="flex flex-row justify-center">
