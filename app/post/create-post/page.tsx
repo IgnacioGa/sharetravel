@@ -27,7 +27,6 @@ const CreatePost = () => {
     setValue
   } = useFormContext();
 
-
   const clearInitialData = useCallback(() => {
     onChangeMultipleFields(null);
     setPrincipalImage([]);
