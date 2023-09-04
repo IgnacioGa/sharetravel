@@ -14,7 +14,7 @@ export const POST = async (request: Request) => {
     });
     return new Response(JSON.stringify(user), { status: 201 });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return new Response(JSON.stringify({ error: "Failed to create a new user" }), { status: 500 });
   }
 };

@@ -65,9 +65,11 @@ const Form = ({
         {errors.multipleFiles && <small id="emailHelp">photo error</small>}
         {multipleFiles.length > 0 ? (
           <div className="prompt_layout mt-3 mb-5">
-            {multipleFiles.map((file, i) => <ImagePreview key={i} image={file} />)}
+            {multipleFiles.map((file, i) => (
+              <ImagePreview key={i} image={file} />
+            ))}
           </div>
-        ): null}
+        ) : null}
         <input type="text" placeholder="City.." required className="search_input peer mb-7" id="id_city" {...register("city")} />
         {errors.city && <small id="emailHelp">City is a required field</small>}
       </div>

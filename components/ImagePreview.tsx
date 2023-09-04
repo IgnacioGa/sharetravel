@@ -12,57 +12,46 @@ interface Props {
 
 const ImagePreview = ({ image, isPrincipal = false }: Props) => {
   const [imageURL, setImageURL] = useState<string | null>(null);
-  const [style, setStyle] = useState({display: 'none'});
-  const [isHoverImg, setisHoverImg] = useState(false)
-  const [isVisible, setIsVisible] = useState(true)
+  const [style, setStyle] = useState({ display: "none" });
+  const [isHoverImg, setisHoverImg] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
 
-  const handleDeleteImage = async() => {
-    if(imageURL === null){
-      return
+  const handleDeleteImage = async () => {
+    if (imageURL === null) {
+      return;
     }
-    if(isPrincipal) {
-      if(imageURL.includes('blob')) {
-        setPrincipalImage([])
-        return
+    if (isPrincipal) {
+      if (imageURL.includes("blob")) {
+        setPrincipalImage([]);
+        return;
       }
-      await deletePrincipalImage(imageURL)
+      await deletePrincipalImage(imageURL);
     } else {
-      if(imageURL.includes('blob')) {
-        onDeleteMultipleFile(image as File)
-        return
+      if (imageURL.includes("blob")) {
+        onDeleteMultipleFile(image as File);
+        return;
       }
-      await deleteApiMedia(imageURL)
+      await deleteApiMedia(imageURL);
     }
-    setIsVisible(false)
+    setIsVisible(false);
+  };
 
-  }
+  const { onDeleteMultipleFile, setPrincipalImage } = useFormContext();
 
-  const {
-    onDeleteMultipleFile,
-    setPrincipalImage
-  } = useFormContext();
-
-
-  const imgStyle = {'borderWidth': '2px', 'borderColor': 'rgb(0 0 0)', 'opacity': '0.1'}
+  const imgStyle = { borderWidth: "2px", borderColor: "rgb(0 0 0)", opacity: "0.1" };
   useEffect(() => {
     // create the preview
     if (typeof image === "string") {
       setImageURL(image);
-    }
-
-    else if (image instanceof File) {
+    } else if (image instanceof File) {
       const objectUrl = URL.createObjectURL(image);
       setImageURL(objectUrl);
       return () => URL.revokeObjectURL(objectUrl);
-    }
-
-    else if (Array.isArray(image)) {
+    } else if (Array.isArray(image)) {
       const objectUrl = URL.createObjectURL(image[0]);
       setImageURL(objectUrl);
       return () => URL.revokeObjectURL(objectUrl);
-    }
-
-    else {
+    } else {
       setImageURL(image.url);
     }
   }, [image]);
@@ -70,20 +59,29 @@ const ImagePreview = ({ image, isPrincipal = false }: Props) => {
   if (imageURL === null) return null;
   if (isVisible === false) return null;
   return (
-    <div className="relative w-full h-fit" onMouseEnter={() => {setStyle({display: 'block'}); setisHoverImg(true)}} onMouseLeave={() => {setStyle({display: 'none'}), setisHoverImg(false)}}>
-      <Image 
-      src={imageURL} 
-      width={100} 
-      height={100} 
-      alt="preview" 
-      loading="lazy" 
-      className="flex-1 break-inside-avoid w-full h-fit border-2 border-transparent"
-      style={{
-        ...(isHoverImg ? {
-          ...imgStyle
-        } : {}),
+    <div
+      className="relative w-full h-fit"
+      onMouseEnter={() => {
+        setStyle({ display: "block" });
+        setisHoverImg(true);
       }}
-      
+      onMouseLeave={() => {
+        setStyle({ display: "none" }), setisHoverImg(false);
+      }}>
+      <Image
+        src={imageURL}
+        width={100}
+        height={100}
+        alt="preview"
+        loading="lazy"
+        className="flex-1 break-inside-avoid w-full h-fit border-2 border-transparent"
+        style={{
+          ...(isHoverImg
+            ? {
+                ...imgStyle
+              }
+            : {})
+        }}
       />
       <Image
         src={"/assets/icons/delete.svg"}
@@ -97,7 +95,7 @@ const ImagePreview = ({ image, isPrincipal = false }: Props) => {
         }}
       />
     </div>
-  )
+  );
 };
 
 export default ImagePreview;

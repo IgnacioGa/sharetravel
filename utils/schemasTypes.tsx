@@ -46,7 +46,7 @@ export interface FormProps {
 export interface FormProviderProps extends FormProps {
   setValue: any;
   setSubmitURL: Dispatch<SetStateAction<string>>;
-  onDeleteMultipleFile: (file: File) => void
+  onDeleteMultipleFile: (file: File) => void;
 }
 
 export interface ImageProps {

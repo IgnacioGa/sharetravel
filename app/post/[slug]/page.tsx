@@ -61,7 +61,7 @@ const IndividualPost = ({ params }: { params: { slug: string } }) => {
         <div className="w-3/4 h-[15rem] align-middle justify-center mt-10">
           <Gallery medias={medias} />
         </div>
-      ): null}
+      ) : null}
     </section>
   );
 };

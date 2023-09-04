@@ -25,8 +25,8 @@ const UpdatePost = ({ params }: { params: { slug: string } }) => {
   }, []);
 
   const setInitialData = (postData: PostType) => {
-    onChangeMultipleFields(null)
-    if (postData.medias && postData.medias.length > 0 ) {
+    onChangeMultipleFields(null);
+    if (postData.medias && postData.medias.length > 0) {
       onChangeMultipleFields(postData.medias);
     }
     setValue("title", postData?.title);

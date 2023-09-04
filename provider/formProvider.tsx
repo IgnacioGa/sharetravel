@@ -27,7 +27,7 @@ const INITIAL_VALUES: FormProviderProps = {
   multipleFiles: [],
   onChangeMultipleFields: (files: FileList | ImageProps[] | null) => {},
   setSubmitURL: () => "",
-  onDeleteMultipleFile: () => null,
+  onDeleteMultipleFile: () => null
 };
 
 const FormContext = createContext(INITIAL_VALUES);
@@ -50,12 +50,12 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
         }
       }
     }
-    if(files == null) setMultipleFiles([])
+    if (files == null) setMultipleFiles([]);
   };
 
   const onDeleteMultipleFile = (file: File) => {
     setMultipleFiles((prevState: any) => prevState.filter((i: File) => i !== file));
-  }
+  };
 
   const {
     register,
@@ -83,7 +83,7 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
     const title = getValues("title");
     const city = getValues("city");
 
-    console.log(session?.user._id)
+    console.log(session?.user._id);
     const postData = {
       title,
       text,

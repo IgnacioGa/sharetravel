@@ -14,7 +14,7 @@ const Feed = () => {
   };
 
   const fetchPosts = async () => {
-    const response = await getPosts()
+    const response = await getPosts();
     setPosts(response.data);
   };
 
