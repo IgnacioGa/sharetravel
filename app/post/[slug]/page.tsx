@@ -57,11 +57,11 @@ const IndividualPost = ({ params }: { params: { slug: string } }) => {
       </div>
       <div className="mt-12 justify-start w-full">{parse(`${post.text}`)}</div>
 
-      {medias.length > 0 && (
+      {medias.length > 0 ? (
         <div className="w-3/4 h-[15rem] align-middle justify-center mt-10">
           <Gallery medias={medias} />
         </div>
-      )}
+      ): null}
     </section>
   );
 };

@@ -23,13 +23,22 @@ const CreatePost = () => {
     principalImage,
     setPrincipalImage,
     multipleFiles,
-    onChangeMultipleFields
+    onChangeMultipleFields,
+    setValue
   } = useFormContext();
 
   useEffect(() => {
-    if (session?.user) setPageStatus(INDIVIDUAL_PAGE_STATUS.READY);
+    if (session?.user) {setPageStatus(INDIVIDUAL_PAGE_STATUS.READY); clearInitialData()};
     if (session === null) setPageStatus(INDIVIDUAL_PAGE_STATUS.UNAUTHORIZED);
   }, [session]);
+
+  const clearInitialData = () => {
+    onChangeMultipleFields(null)
+    setPrincipalImage([])
+    setValue("title", '');
+    setText('');
+    setValue("city", '');
+  }
 
   if (pageStatus === INDIVIDUAL_PAGE_STATUS.LOADING) return <div>Loading</div>;
   if (pageStatus === INDIVIDUAL_PAGE_STATUS.UNAUTHORIZED) return <Unauthorized text={TEXTOPTIONS.unlogged} />;

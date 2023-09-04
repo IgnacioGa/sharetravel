@@ -3,10 +3,9 @@ import PostCard from "./PostCard";
 
 interface PropsType {
   data: PostType[];
-  handleTagClick: () => void;
 }
 
-export const PostContainer = ({ data, handleTagClick }: PropsType) => {
+export const PostContainer = ({ data }: PropsType) => {
   return (
     <div className="flex flex-col w-full ">
       <div
@@ -16,7 +15,7 @@ export const PostContainer = ({ data, handleTagClick }: PropsType) => {
       </div>
       <div className="prompt_layout w-full justify-center align-middle gap-3">
         {data.map((post) => (
-          <PostCard key={post._id} post={post} handleTagClick={handleTagClick} />
+          <PostCard key={post._id} post={post} />
         ))}
       </div>
     </div>

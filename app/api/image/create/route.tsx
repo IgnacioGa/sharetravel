@@ -12,7 +12,7 @@ export const POST = async (request: NextRequest) => {
     return NextResponse.json({ object: JSON.stringify(medias) }, { status: 201 });
   } catch (error) {
     console.log(error);
-    return NextResponse.json({ error: "Failed to create a new post" }, { status: 400 });
+    return NextResponse.json({ error: "Failed to fetch images" }, { status: 400 });
   }
 
   // const response = await request.formData();

@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { uploadCloudImages } from "@utils/cloudinary";
 import { STATUS } from "@utils/contants";
 import { postFormSchema } from "@utils/formSchemas";
-import { FormProviderProps, ImageProps } from "@utils/schemasTypes";
+import { FormProviderProps, ImageProps, MediaType } from "@utils/schemasTypes";
 import { instanceOfImage } from "@utils/utils";
 
 const INITIAL_VALUES: FormProviderProps = {
@@ -26,7 +26,8 @@ const INITIAL_VALUES: FormProviderProps = {
   setPrincipalImage: () => {},
   multipleFiles: [],
   onChangeMultipleFields: (files: FileList | ImageProps[] | null) => {},
-  setSubmitURL: () => ""
+  setSubmitURL: () => "",
+  onDeleteMultipleFile: () => null,
 };
 
 const FormContext = createContext(INITIAL_VALUES);
@@ -49,7 +50,12 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
         }
       }
     }
+    if(files == null) setMultipleFiles([])
   };
+
+  const onDeleteMultipleFile = (file: File) => {
+    setMultipleFiles((prevState: any) => prevState.filter((i: File) => i !== file));
+  }
 
   const {
     register,
@@ -77,6 +83,7 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
     const title = getValues("title");
     const city = getValues("city");
 
+    console.log(session?.user._id)
     const postData = {
       title,
       text,
@@ -106,7 +113,7 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
             imagesData.push({ post: post._id, url: images[url] });
           }
           try {
-            await fetch("/api/images", {
+            await fetch("/api/image/create", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json"
@@ -121,11 +128,6 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
       }
     } catch (error) {
       console.log(error);
-    } finally {
-      setValue("title", "");
-      setValue("multipleFiles", "");
-      setValue("principalFile", "");
-      setValue("city", "");
     }
   };
 
@@ -143,7 +145,8 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
       setPrincipalImage,
       multipleFiles,
       onChangeMultipleFields,
-      setSubmitURL
+      setSubmitURL,
+      onDeleteMultipleFile
     };
   }, [errors, text, principalImage, multipleFiles]);
 

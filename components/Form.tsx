@@ -43,6 +43,7 @@ const Form = ({
           <div className="flex align-middle justify-center mb-4">
             <ImagePreview
               image={principalImage[0] instanceof File || instanceOfImage(principalImage[0]) ? principalImage[0] : principalImage}
+              isPrincipal={true}
             />
           </div>
         ) : null}
@@ -62,7 +63,11 @@ const Form = ({
           Upload Images
         </label>
         {errors.multipleFiles && <small id="emailHelp">photo error</small>}
-        {multipleFiles.length > 0 ? multipleFiles.map((file, i) => <ImagePreview key={i} image={file} />) : null}
+        {multipleFiles.length > 0 ? (
+          <div className="prompt_layout mt-3 mb-5">
+            {multipleFiles.map((file, i) => <ImagePreview key={i} image={file} />)}
+          </div>
+        ): null}
         <input type="text" placeholder="City.." required className="search_input peer mb-7" id="id_city" {...register("city")} />
         {errors.city && <small id="emailHelp">City is a required field</small>}
       </div>
