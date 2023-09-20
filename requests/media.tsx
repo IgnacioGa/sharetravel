@@ -14,7 +14,7 @@ export const createApiMedia = async (body: MediaCreateProps[]) => {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(body)
-  })
+  });
   if (response.status == 405) return { status: 405, data: "Error on create images" };
   return { status: 201, data: {} };
-}
+};

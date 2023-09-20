@@ -54,13 +54,13 @@ const handler = NextAuth({
   callbacks: {
     jwt: async ({ token, user }) => {
       if (user) {
-        token.user=user
+        token.user = user;
       }
       return token;
     },
     async session({ session, token }) {
       let sessionUser;
-      if(session.user?.email) {
+      if (session.user?.email) {
         sessionUser = await User.findOne({
           email: session.user?.email
         });
@@ -70,7 +70,7 @@ const handler = NextAuth({
         });
       }
 
-      if(sessionUser){
+      if (sessionUser) {
         session.user._id = sessionUser?.id;
         session.user.email = sessionUser?.id;
         session.user.name = sessionUser?.username;

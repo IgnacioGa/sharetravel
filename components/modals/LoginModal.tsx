@@ -6,9 +6,8 @@ import { LoginProps } from "@utils/schemasTypes";
 
 // This goes to our signup API endpoint
 async function createUser({ enteredEmail, enteredPassword, username, firstName, lastName }: LoginProps) {
-
-  const response = await signUpRequest({ enteredEmail, enteredPassword, username, firstName, lastName});
-  const data = response.data
+  const response = await signUpRequest({ enteredEmail, enteredPassword, username, firstName, lastName });
+  const data = response.data;
 
   if (response.status != 200) {
     throw new Error(data.message || "Something went wrong!");

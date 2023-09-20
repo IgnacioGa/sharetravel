@@ -41,7 +41,7 @@ export interface FormProps {
   setPrincipalImage: Dispatch<SetStateAction<File[] | string>>;
   multipleFiles: File[] | ImageProps[] | any[];
   onChangeMultipleFields: (files: FileList | ImageProps[] | null) => void;
-  isUpdate: boolean,
+  isUpdate: boolean;
 }
 
 export interface FormProviderProps extends FormProps {
@@ -69,6 +69,6 @@ export interface LoginProps {
 }
 
 export interface MediaCreateProps {
-  post: string,
-  url: string
+  post: string;
+  url: string;
 }

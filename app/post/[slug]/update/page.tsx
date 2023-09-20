@@ -34,7 +34,7 @@ const UpdatePost = ({ params }: { params: { slug: string } }) => {
     setValue("city", postData?.city);
     console.log("postdata ->", postData);
     if (postData.principalImage) setPrincipalImage(postData.principalImage);
-    setIsUpdate(true)
+    setIsUpdate(true);
   };
 
   useEffect(() => {

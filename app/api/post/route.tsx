@@ -2,10 +2,10 @@ import { connectoToDB } from "@utils/database";
 import Post from "@models/Post";
 import { NextRequest, NextResponse } from "next/server";
 
-const searchOptions = ['status', 'date']
+const searchOptions = ["status", "date"];
 
 interface filterProps {
-  [key: string]: string | undefined
+  [key: string]: string | undefined;
 }
 
 export const POST = async (request: NextRequest) => {
@@ -23,19 +23,18 @@ export const POST = async (request: NextRequest) => {
 };
 
 export const GET = async (request: NextRequest) => {
-    const filter: filterProps = {}
-    for(let option in searchOptions){
-      const searchOption = request.nextUrl.searchParams.get(searchOptions[option])
-      if(searchOption) filter[searchOptions[option]] = searchOption
-    }
-    
-    try {
-      await connectoToDB();
-      let listOfPosts = await Post.find(filter).populate("creator");
-      return NextResponse.json({ object: JSON.stringify(listOfPosts) }, { status: 201 });
-    } catch (error) {
-      console.log(error);
-      return NextResponse.json({ error: "Failed to fetch post" }, { status: 400 });
-    }
-  };
-  
+  const filter: filterProps = {};
+  for (let option in searchOptions) {
+    const searchOption = request.nextUrl.searchParams.get(searchOptions[option]);
+    if (searchOption) filter[searchOptions[option]] = searchOption;
+  }
+
+  try {
+    await connectoToDB();
+    let listOfPosts = await Post.find(filter).populate("creator");
+    return NextResponse.json({ object: JSON.stringify(listOfPosts) }, { status: 201 });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({ error: "Failed to fetch post" }, { status: 400 });
+  }
+};

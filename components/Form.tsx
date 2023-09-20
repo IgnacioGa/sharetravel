@@ -80,8 +80,8 @@ const Form = ({
             <button className="outline_btn">Delete</button>
             <button className="outline_btn">Archive</button>
           </>
-        ): null}
-        
+        ) : null}
+
         <div className="flex flex-row">
           <button type="submit" className="black_btn mr-5" onClick={() => setStatus(STATUS.DRAFT)}>
             Save as draft

@@ -20,8 +20,8 @@ export const getPosts = async () => {
   return { status: 200, data: JSON.parse(data.object) };
 };
 
-export const getFeedPosts = async() => {
-  const response = await fetch('api/post?' + new URLSearchParams({status: STATUS.TOAPPROVE}));
+export const getFeedPosts = async () => {
+  const response = await fetch("api/post?" + new URLSearchParams({ status: STATUS.TOAPPROVE }));
   const data = await response.json();
   return { status: 200, data: JSON.parse(data.object) };
-}
+};

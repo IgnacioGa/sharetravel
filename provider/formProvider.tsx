@@ -30,7 +30,7 @@ const INITIAL_VALUES: FormProviderProps = {
   setSubmitURL: () => "",
   onDeleteMultipleFile: () => null,
   isUpdate: false,
-  setIsUpdate: () => {},
+  setIsUpdate: () => {}
 };
 
 const FormContext = createContext(INITIAL_VALUES);
@@ -42,7 +42,7 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
   const [text, setText] = useState<string>("");
   const [status, setStatus] = useState<string>(STATUS.DRAFT);
   const [submitURL, setSubmitURL] = useState<string>("/api/post/create");
-  const [isUpdate, setIsUpdate] = useState<boolean>(false)
+  const [isUpdate, setIsUpdate] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -116,7 +116,7 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
             imagesData.push({ post: post._id, url: images[url] });
           }
           try {
-            const response = await createApiMedia(imagesData)
+            const response = await createApiMedia(imagesData);
             if (response.status == 201) router.push(`/post/${post.slug}`);
           } catch (error) {
             console.log(error);

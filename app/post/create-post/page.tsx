@@ -42,7 +42,7 @@ const CreatePost = () => {
       clearInitialData();
     }
     if (session === null) setPageStatus(INDIVIDUAL_PAGE_STATUS.UNAUTHORIZED);
-  }, [session]);
+  }, [session, clearInitialData]);
 
   if (pageStatus === INDIVIDUAL_PAGE_STATUS.LOADING) return <div>Loading</div>;
   if (pageStatus === INDIVIDUAL_PAGE_STATUS.UNAUTHORIZED) return <Unauthorized text={TEXTOPTIONS.unlogged} />;
