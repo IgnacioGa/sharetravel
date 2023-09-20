@@ -34,6 +34,7 @@ const UpdatePost = ({ params }: { params: { slug: string } }) => {
     setValue("city", postData?.city);
     console.log("postdata ->", postData);
     if (postData.principalImage) setPrincipalImage(postData.principalImage);
+    setIsUpdate(true)
   };
 
   useEffect(() => {
@@ -70,7 +71,9 @@ const UpdatePost = ({ params }: { params: { slug: string } }) => {
     setPrincipalImage,
     multipleFiles,
     onChangeMultipleFields,
-    setSubmitURL
+    setSubmitURL,
+    setIsUpdate,
+    isUpdate
   } = useFormContext();
 
   if (pageStatus === INDIVIDUAL_PAGE_STATUS.LOADING) return <div>Loading</div>;
@@ -90,6 +93,7 @@ const UpdatePost = ({ params }: { params: { slug: string } }) => {
       setPrincipalImage={setPrincipalImage}
       multipleFiles={multipleFiles}
       onChangeMultipleFields={onChangeMultipleFields}
+      isUpdate={isUpdate}
     />
   );
 };

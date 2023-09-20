@@ -24,7 +24,8 @@ const CreatePost = () => {
     setPrincipalImage,
     multipleFiles,
     onChangeMultipleFields,
-    setValue
+    setValue,
+    isUpdate
   } = useFormContext();
 
   const clearInitialData = useCallback(() => {
@@ -41,7 +42,7 @@ const CreatePost = () => {
       clearInitialData();
     }
     if (session === null) setPageStatus(INDIVIDUAL_PAGE_STATUS.UNAUTHORIZED);
-  }, [session, clearInitialData]);
+  }, [session]);
 
   if (pageStatus === INDIVIDUAL_PAGE_STATUS.LOADING) return <div>Loading</div>;
   if (pageStatus === INDIVIDUAL_PAGE_STATUS.UNAUTHORIZED) return <Unauthorized text={TEXTOPTIONS.unlogged} />;
@@ -65,11 +66,10 @@ const CreatePost = () => {
         setPrincipalImage={setPrincipalImage}
         multipleFiles={multipleFiles}
         onChangeMultipleFields={onChangeMultipleFields}
+        isUpdate={isUpdate}
       />
     </section>
   );
 };
-
-CreatePost.requireAuth = true;
 
 export default CreatePost;

@@ -4,6 +4,7 @@ import { connectoToDB } from "@utils/database";
 import User from "@models/User";
 import bcrypt from "bcrypt";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { UserType } from "@utils/schemasTypes";
 
 const handler = NextAuth({
   providers: [
@@ -52,16 +53,30 @@ const handler = NextAuth({
   },
   callbacks: {
     jwt: async ({ token, user }) => {
-      user && (token.user = user);
+      if (user) {
+        token.user=user
+      }
       return token;
     },
-    async session({ session }) {
-      const sessionUser = await User.findOne({
-        email: session.user?.email
-      });
+    async session({ session, token }) {
+      let sessionUser;
+      if(session.user?.email) {
+        sessionUser = await User.findOne({
+          email: session.user?.email
+        });
+      } else {
+        sessionUser = await User.findOne({
+          _id: token.sub as string
+        });
+      }
 
-      session.user._id = sessionUser?.id;
-      session.user.slug = sessionUser?.slug;
+      if(sessionUser){
+        session.user._id = sessionUser?.id;
+        session.user.email = sessionUser?.id;
+        session.user.name = sessionUser?.username;
+        session.user.image = sessionUser?.image;
+        session.user.slug = sessionUser?.slug;
+      }
       return session;
     },
     async signIn({ profile }) {

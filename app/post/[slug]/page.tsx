@@ -50,7 +50,7 @@ const IndividualPost = ({ params }: { params: { slug: string } }) => {
       <div className="head_text text-center mb-5">{post?.title}</div>
       <div className="flex-between flex-row w-full align-middle mt-4">
         <div className="flex flex-row justify-center">
-          <Image src={post?.creator.image as string} width={20} height={20} alt="profile" className="rounded-full mr-2" loading="lazy" />
+          <Image src={post?.creator.image as string || "/assets/icons/profile.svg"} width={20} height={20} alt="profile" className="rounded-full mr-2" loading="lazy" />
           <span>{post?.creator.username}</span>
         </div>
         <span>{post?.city}</span>

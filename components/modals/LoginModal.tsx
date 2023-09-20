@@ -1,35 +1,16 @@
 import { signIn } from "next-auth/react";
 import React, { FormEvent, useRef, useState } from "react";
 import Image from "next/image";
-
-interface LoginProps {
-  enteredEmail: string | undefined;
-  enteredPassword: string | undefined;
-  username: string | undefined;
-  firstName: string | undefined;
-  lastName: string | undefined;
-}
+import { signUpRequest } from "@requests/user";
+import { LoginProps } from "@utils/schemasTypes";
 
 // This goes to our signup API endpoint
 async function createUser({ enteredEmail, enteredPassword, username, firstName, lastName }: LoginProps) {
-  const response = await fetch("/api/auth/signup", {
-    method: "POST",
-    body: JSON.stringify({
-      enteredEmail,
-      enteredPassword,
-      username,
-      firstName,
-      lastName
-    }),
-    headers: new Headers({
-      "Content-Type": "application/json",
-      Accept: "application/json"
-    })
-  });
 
-  const data = await response.json();
+  const response = await signUpRequest({ enteredEmail, enteredPassword, username, firstName, lastName});
+  const data = response.data
 
-  if (!response.ok) {
+  if (response.status != 200) {
     throw new Error(data.message || "Something went wrong!");
   }
 
@@ -51,7 +32,7 @@ function LoginModal({ onCancel }: any) {
   }
 
   async function loginUser({ email, password }: { email: string | undefined; password: string | undefined }) {
-    const response = await signIn("credentials", {
+    await signIn("credentials", {
       email: email,
       password: password
     });

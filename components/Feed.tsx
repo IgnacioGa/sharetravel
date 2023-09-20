@@ -3,7 +3,7 @@
 import { useState, useEffect, ChangeEvent } from "react";
 import { PostType } from "@utils/schemasTypes";
 import { PostContainer } from "./PostContainer";
-import { getPosts } from "@requests/post";
+import { getFeedPosts, getPosts } from "@requests/post";
 
 const Feed = () => {
   const [searchText, setSearchText] = useState("");
@@ -14,7 +14,7 @@ const Feed = () => {
   };
 
   const fetchPosts = async () => {
-    const response = await getPosts();
+    const response = await getFeedPosts();
     setPosts(response.data);
   };
 

@@ -6,7 +6,6 @@ export const POST = async (request: NextRequest) => {
   const data = await request.json();
   try {
     await connectoToDB();
-
     const newPost = new Post({ ...data });
     const post = await newPost.save();
     return NextResponse.json({ object: JSON.stringify(post) }, { status: 201 });

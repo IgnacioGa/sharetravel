@@ -12,6 +12,7 @@ import { STATUS } from "@utils/contants";
 import { postFormSchema } from "@utils/formSchemas";
 import { FormProviderProps, ImageProps, MediaType } from "@utils/schemasTypes";
 import { instanceOfImage } from "@utils/utils";
+import { createApiMedia } from "@requests/media";
 
 const INITIAL_VALUES: FormProviderProps = {
   onSubmit: () => (e?: React.FormEvent<HTMLFormElement>) => new Promise<void>(() => {}),
@@ -27,7 +28,9 @@ const INITIAL_VALUES: FormProviderProps = {
   multipleFiles: [],
   onChangeMultipleFields: (files: FileList | ImageProps[] | null) => {},
   setSubmitURL: () => "",
-  onDeleteMultipleFile: () => null
+  onDeleteMultipleFile: () => null,
+  isUpdate: false,
+  setIsUpdate: () => {},
 };
 
 const FormContext = createContext(INITIAL_VALUES);
@@ -39,6 +42,7 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
   const [text, setText] = useState<string>("");
   const [status, setStatus] = useState<string>(STATUS.DRAFT);
   const [submitURL, setSubmitURL] = useState<string>("/api/post/create");
+  const [isUpdate, setIsUpdate] = useState<boolean>(false)
 
   const router = useRouter();
 
@@ -83,7 +87,6 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
     const title = getValues("title");
     const city = getValues("city");
 
-    console.log(session?.user._id);
     const postData = {
       title,
       text,
@@ -113,13 +116,8 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
             imagesData.push({ post: post._id, url: images[url] });
           }
           try {
-            await fetch("/api/image/create", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify(imagesData)
-            });
+            const response = await createApiMedia(imagesData)
+            if (response.status == 201) router.push(`/post/${post.slug}`);
           } catch (error) {
             console.log(error);
           }
@@ -146,9 +144,11 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
       multipleFiles,
       onChangeMultipleFields,
       setSubmitURL,
-      onDeleteMultipleFile
+      onDeleteMultipleFile,
+      setIsUpdate,
+      isUpdate
     };
-  }, [errors, text, principalImage, multipleFiles]);
+  }, [errors, text, principalImage, multipleFiles, isUpdate]);
 
   return <FormContext.Provider value={memorizedValue}>{children}</FormContext.Provider>;
 };

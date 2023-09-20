@@ -17,7 +17,8 @@ const Form = ({
   setPrincipalImage,
   principalImage,
   multipleFiles,
-  onChangeMultipleFields
+  onChangeMultipleFields,
+  isUpdate
 }: FormProps) => {
   return (
     <form className="flex-center flex-col mt-8 w-full" onSubmit={handleSubmit(onSubmit)}>
@@ -74,7 +75,13 @@ const Form = ({
         {errors.city && <small id="emailHelp">City is a required field</small>}
       </div>
       <div className="flex flex-row w-full align-middle justify-between mt-7">
-        <button className="outline_btn">Delete</button>
+        {isUpdate ? (
+          <>
+            <button className="outline_btn">Delete</button>
+            <button className="outline_btn">Archive</button>
+          </>
+        ): null}
+        
         <div className="flex flex-row">
           <button type="submit" className="black_btn mr-5" onClick={() => setStatus(STATUS.DRAFT)}>
             Save as draft
