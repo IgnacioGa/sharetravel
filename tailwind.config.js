@@ -4,6 +4,7 @@ module.exports = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./public/assets/**/*.svg",
     "./node_modules/flowbite-react/**/*.js"
   ],
   theme: {
@@ -16,6 +17,9 @@ module.exports = {
         "primary-orange": "#FF5722"
       }
     }
+  },
+  variants: {
+    fill: ["hover", "focus"] // this line does the trick
   },
   plugins: [require("flowbite/plugin")]
 };

@@ -1,4 +1,4 @@
-export const uploadCloudImages = async (images: []) => {
+export const uploadCloudImages = async (images: File[]) => {
   const urlsImages = [];
   for (const file of images) {
     const fd = new FormData();

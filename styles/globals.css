@@ -176,3 +176,7 @@
 .input-login {
   @apply flex flex-col items-start align-middle w-full;
 }
+
+.modal {
+  @apply w-5/6 h-5/6 lg:w-[571px] bg-white rounded-[10px] px-4 md:px-8 py-4 fixed top-[10%] flex flex-col items-center gap-4;
+}

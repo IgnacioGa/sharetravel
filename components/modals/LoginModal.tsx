@@ -1,36 +1,15 @@
 import { signIn } from "next-auth/react";
 import React, { FormEvent, useRef, useState } from "react";
 import Image from "next/image";
-
-interface LoginProps {
-  enteredEmail: string | undefined;
-  enteredPassword: string | undefined;
-  username: string | undefined;
-  firstName: string | undefined;
-  lastName: string | undefined;
-}
+import { signUpRequest } from "@requests/user";
+import { LoginProps } from "@utils/schemasTypes";
 
 // This goes to our signup API endpoint
 async function createUser({ enteredEmail, enteredPassword, username, firstName, lastName }: LoginProps) {
-  console.log({ enteredEmail, enteredPassword, username });
-  const response = await fetch("/api/auth/signup", {
-    method: "POST",
-    body: JSON.stringify({
-      enteredEmail,
-      enteredPassword,
-      username,
-      firstName,
-      lastName
-    }),
-    headers: new Headers({
-      "Content-Type": "application/json",
-      Accept: "application/json"
-    })
-  });
+  const response = await signUpRequest({ enteredEmail, enteredPassword, username, firstName, lastName });
+  const data = response.data;
 
-  const data = await response.json();
-
-  if (!response.ok) {
+  if (response.status != 200) {
     throw new Error(data.message || "Something went wrong!");
   }
 
@@ -52,11 +31,10 @@ function LoginModal({ onCancel }: any) {
   }
 
   async function loginUser({ email, password }: { email: string | undefined; password: string | undefined }) {
-    const response = await signIn("credentials", {
+    await signIn("credentials", {
       email: email,
       password: password
     });
-    console.log(response);
   }
 
   async function submitHandler(event: FormEvent<HTMLFormElement>) {
@@ -91,10 +69,7 @@ function LoginModal({ onCancel }: any) {
   }
 
   return (
-    <div
-      className={
-        "w-5/6 h-5/6 lg:w-[571px] bg-WHITE rounded-[10px] px-4 md:px-8 py-4 fixed top-[10%] shadow-green flex flex-col items-center gap-4  bg-[#F2F2F2] "
-      }>
+    <div className={"modal"}>
       <div className="flex flex-col items-center">
         <Image src="/assets/images/logo.svg" width={100} height={100} alt="logo" className="object-coantain mb-4" />
       </div>
@@ -160,9 +135,6 @@ function LoginModal({ onCancel }: any) {
             Cancel
           </button>
         </div>
-        {/* <div className={'w-[182px]'}>
-                    <button label={t('modals.advanceTermsConditions.continue')} type={'FULL'} bolded onClick={onAccept} containerStyles={'h-8 w-full ml-2'} />
-                </div> */}
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "useUnknownInCatchVariables": false,
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -14,6 +15,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "noUnusedLocals": false,
     "plugins": [
       {
         "name": "next"
