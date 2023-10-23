@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
 
-const DeletePostModal = ({onAccept, onCancel}: any) => {
+const DeletePostModal = ({ onAccept, onCancel }: any) => {
   return (
-    <div
-      className={"modal"}>
+    <div className={"modal"}>
       <div className={"flex flex-col items-center gap-4 p-1 md:p-3 rounded-[7px]"}>
         Are you sure you want to Delete ? This is irreversible
       </div>
@@ -18,7 +17,7 @@ const DeletePostModal = ({onAccept, onCancel}: any) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DeletePostModal
+export default DeletePostModal;

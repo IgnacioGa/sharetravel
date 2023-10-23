@@ -29,12 +29,14 @@ export const GET = async (request: NextRequest) => {
     const searchOption = request.nextUrl.searchParams.get(searchOptions[option]);
     if (searchOption) {
       filter[searchOptions[option]] = searchOption;
-    } 
+    }
   }
 
   try {
     await connectoToDB();
-    let listOfPosts = await Post.find({status: {"$ne": STATUS.DELETED}}).find(filter).populate("creator");
+    let listOfPosts = await Post.find({ status: { $ne: STATUS.DELETED } })
+      .find(filter)
+      .populate("creator");
     return NextResponse.json({ object: JSON.stringify(listOfPosts) }, { status: 201 });
   } catch (error) {
     console.log(error);

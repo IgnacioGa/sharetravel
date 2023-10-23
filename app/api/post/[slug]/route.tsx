@@ -6,11 +6,10 @@ import { STATUS } from "@utils/contants";
 export const GET = async (request: NextRequest, { params }: { params: { slug: string } }) => {
   try {
     await connectoToDB();
-    const post = await Post.
-    find({status: {"$ne": STATUS.DELETED}}).
-    findOne({
-      slug: params.slug
-    })
+    const post = await Post.find({ status: { $ne: STATUS.DELETED } })
+      .findOne({
+        slug: params.slug
+      })
       .populate("medias")
       .populate("creator");
     if (post !== null) return NextResponse.json(JSON.stringify(post), { status: 200 });

@@ -37,7 +37,7 @@ export const createPost = async (postData: PostCreateProps) => {
   });
   const data = await response.json();
   return { status: 201, data: JSON.parse(data.object) };
-}
+};
 
 export const updatePost = async (postData: PostUpdateProps, url: string) => {
   const response = await fetch(url, {
@@ -49,4 +49,4 @@ export const updatePost = async (postData: PostUpdateProps, url: string) => {
   });
   const data = await response.json();
   return { status: 201, data: JSON.parse(data.object) };
-}
+};

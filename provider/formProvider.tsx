@@ -103,10 +103,10 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
 
     let res;
     try {
-      if(submitURL === "/api/post/create") {
-        res = await createPost(postData)
+      if (submitURL === "/api/post/create") {
+        res = await createPost(postData);
       } else {
-        res = await updatePost(postData, submitURL)
+        res = await updatePost(postData, submitURL);
       }
       const post = res.data;
       const imagesData = [];
@@ -131,14 +131,14 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
     }
   };
 
-  const deletePost = async() => {
-    console.log('de;etetasf', submitURL)
+  const deletePost = async () => {
+    console.log("de;etetasf", submitURL);
     const postDeleteData = {
       status: STATUS.DELETED
-    }
+    };
     await updatePost(postDeleteData, submitURL);
-    router.push('/');
-  }
+    router.push("/");
+  };
 
   const memorizedValue = useMemo(() => {
     return {

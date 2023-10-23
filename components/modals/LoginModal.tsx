@@ -69,8 +69,7 @@ function LoginModal({ onCancel }: any) {
   }
 
   return (
-    <div
-      className={"modal"}>
+    <div className={"modal"}>
       <div className="flex flex-col items-center">
         <Image src="/assets/images/logo.svg" width={100} height={100} alt="logo" className="object-coantain mb-4" />
       </div>

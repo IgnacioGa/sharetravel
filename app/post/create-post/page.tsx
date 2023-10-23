@@ -42,6 +42,7 @@ const CreatePost = () => {
       clearInitialData();
     }
     if (session === null) setPageStatus(INDIVIDUAL_PAGE_STATUS.UNAUTHORIZED);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);
 
   if (pageStatus === INDIVIDUAL_PAGE_STATUS.LOADING) return <div>Loading</div>;

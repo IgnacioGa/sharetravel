@@ -85,7 +85,7 @@ const UpdatePost = ({ params }: { params: { slug: string } }) => {
   if (pageStatus === INDIVIDUAL_PAGE_STATUS.NOT_FOUND) return <NotFound />;
   if (pageStatus === INDIVIDUAL_PAGE_STATUS.UNAUTHORIZED) return <Unauthorized text={TEXTOPTIONS.unlogged} />;
 
-  console.log(deleteModal)
+  console.log(deleteModal);
   return (
     <>
       <Form

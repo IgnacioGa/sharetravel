@@ -23,7 +23,7 @@ const Form = ({
   isUpdate,
   deleteModal,
   setDeleteModal,
-  deletePost,
+  deletePost
 }: FormProps) => {
   return (
     <>
@@ -88,7 +88,14 @@ const Form = ({
         <div className="flex flex-row w-full align-middle justify-between mt-7">
           {isUpdate ? (
             <>
-              <button type="button" className="outline_btn" onClick={() => {setDeleteModal(true)}}>Delete</button>
+              <button
+                type="button"
+                className="outline_btn"
+                onClick={() => {
+                  setDeleteModal(true);
+                }}>
+                Delete
+              </button>
               <button className="outline_btn">Archive</button>
             </>
           ) : null}
