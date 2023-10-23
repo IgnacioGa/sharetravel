@@ -1,4 +1,5 @@
 import { STATUS } from "@utils/contants";
+import { PostCreateProps, PostUpdateProps } from "@utils/schemasTypes";
 
 export const getApiPost = async (slug: string) => {
   const response = await fetch(`/api/post/${slug}`);
@@ -25,3 +26,27 @@ export const getFeedPosts = async () => {
   const data = await response.json();
   return { status: 200, data: JSON.parse(data.object) };
 };
+
+export const createPost = async (postData: PostCreateProps) => {
+  const response = await fetch("/api/post/create", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(postData)
+  });
+  const data = await response.json();
+  return { status: 201, data: JSON.parse(data.object) };
+}
+
+export const updatePost = async (postData: PostUpdateProps, url: string) => {
+  const response = await fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(postData)
+  });
+  const data = await response.json();
+  return { status: 201, data: JSON.parse(data.object) };
+}

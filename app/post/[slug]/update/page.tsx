@@ -9,6 +9,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useFormContext } from "@provider/formProvider";
 import { INDIVIDUAL_PAGE_STATUS, TEXTOPTIONS } from "@utils/contants";
 import Unauthorized from "@components/Unauthorized";
+import DeletePostModal from "@components/modals/DeletePostModal";
+import DismissableModal from "@components/DismisableModal";
 
 const UpdatePost = ({ params }: { params: { slug: string } }) => {
   const [pageStatus, setPageStatus] = useState<INDIVIDUAL_PAGE_STATUS>(INDIVIDUAL_PAGE_STATUS.LOADING);
@@ -37,10 +39,6 @@ const UpdatePost = ({ params }: { params: { slug: string } }) => {
     setIsUpdate(true);
   };
 
-  useEffect(() => {
-    getPost();
-  }, [getPost]);
-
   const { data: session } = useSession();
 
   useEffect(() => {
@@ -58,6 +56,10 @@ const UpdatePost = ({ params }: { params: { slug: string } }) => {
     if (session === null) setPageStatus(INDIVIDUAL_PAGE_STATUS.UNAUTHORIZED);
   }, [session, postData, pageStatus]);
 
+  useEffect(() => {
+    getPost();
+  }, [getPost]);
+
   const {
     onSubmit,
     handleSubmit,
@@ -73,28 +75,37 @@ const UpdatePost = ({ params }: { params: { slug: string } }) => {
     onChangeMultipleFields,
     setSubmitURL,
     setIsUpdate,
-    isUpdate
+    isUpdate,
+    deleteModal,
+    setDeleteModal,
+    deletePost
   } = useFormContext();
 
   if (pageStatus === INDIVIDUAL_PAGE_STATUS.LOADING) return <div>Loading</div>;
   if (pageStatus === INDIVIDUAL_PAGE_STATUS.NOT_FOUND) return <NotFound />;
   if (pageStatus === INDIVIDUAL_PAGE_STATUS.UNAUTHORIZED) return <Unauthorized text={TEXTOPTIONS.unlogged} />;
 
+  console.log(deleteModal)
   return (
-    <Form
-      onSubmit={onSubmit}
-      handleSubmit={handleSubmit}
-      register={register}
-      errors={errors}
-      setStatus={setStatus}
-      text={text}
-      setText={setText}
-      principalImage={principalImage}
-      setPrincipalImage={setPrincipalImage}
-      multipleFiles={multipleFiles}
-      onChangeMultipleFields={onChangeMultipleFields}
-      isUpdate={isUpdate}
-    />
+    <>
+      <Form
+        onSubmit={onSubmit}
+        handleSubmit={handleSubmit}
+        register={register}
+        errors={errors}
+        setStatus={setStatus}
+        text={text}
+        setText={setText}
+        principalImage={principalImage}
+        setPrincipalImage={setPrincipalImage}
+        multipleFiles={multipleFiles}
+        onChangeMultipleFields={onChangeMultipleFields}
+        isUpdate={isUpdate}
+        setDeleteModal={setDeleteModal}
+        deleteModal={deleteModal}
+        deletePost={deletePost}
+      />
+    </>
   );
 };
 

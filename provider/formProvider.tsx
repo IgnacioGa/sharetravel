@@ -10,9 +10,10 @@ import { useRouter } from "next/navigation";
 import { uploadCloudImages } from "@utils/cloudinary";
 import { STATUS } from "@utils/contants";
 import { postFormSchema } from "@utils/formSchemas";
-import { FormProviderProps, ImageProps, MediaType } from "@utils/schemasTypes";
+import { FormProviderProps, ImageProps } from "@utils/schemasTypes";
 import { instanceOfImage } from "@utils/utils";
 import { createApiMedia } from "@requests/media";
+import { createPost, updatePost } from "@requests/post";
 
 const INITIAL_VALUES: FormProviderProps = {
   onSubmit: () => (e?: React.FormEvent<HTMLFormElement>) => new Promise<void>(() => {}),
@@ -30,7 +31,10 @@ const INITIAL_VALUES: FormProviderProps = {
   setSubmitURL: () => "",
   onDeleteMultipleFile: () => null,
   isUpdate: false,
-  setIsUpdate: () => {}
+  setIsUpdate: () => {},
+  setDeleteModal: () => {},
+  deleteModal: false,
+  deletePost: () => {}
 };
 
 const FormContext = createContext(INITIAL_VALUES);
@@ -43,6 +47,7 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
   const [status, setStatus] = useState<string>(STATUS.DRAFT);
   const [submitURL, setSubmitURL] = useState<string>("/api/post/create");
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
+  const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -84,7 +89,7 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
       urlPrincipalImage = await uploadCloudImages(principalImage as File[]);
     }
 
-    const title = getValues("title");
+    const title: string = getValues("title");
     const city = getValues("city");
 
     const postData = {
@@ -96,17 +101,14 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
       principalImage: urlPrincipalImage ? urlPrincipalImage[0] : undefined
     };
 
+    let res;
     try {
-      const res = await fetch(submitURL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(postData)
-      });
-
-      const data = await res.json();
-      const post = JSON.parse(data.object);
+      if(submitURL === "/api/post/create") {
+        res = await createPost(postData)
+      } else {
+        res = await updatePost(postData, submitURL)
+      }
+      const post = res.data;
       const imagesData = [];
 
       if (res.status == 201) {
@@ -129,6 +131,15 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
     }
   };
 
+  const deletePost = async() => {
+    console.log('de;etetasf', submitURL)
+    const postDeleteData = {
+      status: STATUS.DELETED
+    }
+    await updatePost(postDeleteData, submitURL);
+    router.push('/');
+  }
+
   const memorizedValue = useMemo(() => {
     return {
       onSubmit,
@@ -146,9 +157,12 @@ export const FormContextProvider = ({ children }: { children: React.ReactNode })
       setSubmitURL,
       onDeleteMultipleFile,
       setIsUpdate,
-      isUpdate
+      isUpdate,
+      setDeleteModal,
+      deleteModal,
+      deletePost
     };
-  }, [errors, text, principalImage, multipleFiles, isUpdate]);
+  }, [errors, text, principalImage, multipleFiles, isUpdate, deleteModal, setDeleteModal]);
 
   return <FormContext.Provider value={memorizedValue}>{children}</FormContext.Provider>;
 };

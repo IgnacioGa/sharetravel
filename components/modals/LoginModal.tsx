@@ -70,9 +70,7 @@ function LoginModal({ onCancel }: any) {
 
   return (
     <div
-      className={
-        "w-5/6 h-5/6 lg:w-[571px] bg-WHITE rounded-[10px] px-4 md:px-8 py-4 fixed top-[10%] shadow-green flex flex-col items-center gap-4  bg-[#F2F2F2] "
-      }>
+      className={"modal"}>
       <div className="flex flex-col items-center">
         <Image src="/assets/images/logo.svg" width={100} height={100} alt="logo" className="object-coantain mb-4" />
       </div>
@@ -138,9 +136,6 @@ function LoginModal({ onCancel }: any) {
             Cancel
           </button>
         </div>
-        {/* <div className={'w-[182px]'}>
-                    <button label={t('modals.advanceTermsConditions.continue')} type={'FULL'} bolded onClick={onAccept} containerStyles={'h-8 w-full ml-2'} />
-                </div> */}
       </div>
     </div>
   );

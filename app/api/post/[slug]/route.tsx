@@ -1,11 +1,14 @@
 import { connectoToDB } from "@utils/database";
 import Post from "@models/Post";
 import { NextRequest, NextResponse } from "next/server";
+import { STATUS } from "@utils/contants";
 
 export const GET = async (request: NextRequest, { params }: { params: { slug: string } }) => {
   try {
     await connectoToDB();
-    const post = await Post.findOne({
+    const post = await Post.
+    find({status: {"$ne": STATUS.DELETED}}).
+    findOne({
       slug: params.slug
     })
       .populate("medias")
@@ -18,7 +21,7 @@ export const GET = async (request: NextRequest, { params }: { params: { slug: st
   }
 };
 
-export const POST = async (request: NextRequest, { params }: { params: { slug: string } }) => {
+export const PUT = async (request: NextRequest, { params }: { params: { slug: string } }) => {
   const data = await request.json();
   try {
     await connectoToDB();

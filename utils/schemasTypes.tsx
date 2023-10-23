@@ -42,6 +42,9 @@ export interface FormProps {
   multipleFiles: File[] | ImageProps[] | any[];
   onChangeMultipleFields: (files: FileList | ImageProps[] | null) => void;
   isUpdate: boolean;
+  deleteModal: boolean;
+  setDeleteModal: Dispatch<SetStateAction<boolean>>;
+  deletePost: () => void;
 }
 
 export interface FormProviderProps extends FormProps {
@@ -71,4 +74,22 @@ export interface LoginProps {
 export interface MediaCreateProps {
   post: string;
   url: string;
+}
+
+export interface PostCreateProps {
+  creator: string | undefined;
+  text: string;
+  city: string;
+  title: string;
+  principalImage?: string;
+  status: string;
+}
+
+export interface PostUpdateProps {
+  creator?: string | undefined;
+  text?: string;
+  city?: string;
+  title?: string;
+  principalImage?: string;
+  status?: string;
 }
